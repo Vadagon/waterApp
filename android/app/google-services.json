@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "195705933164",
+    "project_id": "waterapp-ccb86",
+    "storage_bucket": "waterapp-ccb86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195705933164:android:00c743df9b9374b8bcb749",
+        "android_client_info": {
+          "package_name": "com.verblike.water"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195705933164-lifqcqopr323ktj1ij4ieb0q01q389fe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE4qOy-M-_d77rxVz5eO2O9H7V2jGco5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195705933164-lifqcqopr323ktj1ij4ieb0q01q389fe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195705933164:android:ec64cdf45cf2dc55bcb749",
+        "android_client_info": {
+          "package_name": "com.verblike.waterApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195705933164-lifqcqopr323ktj1ij4ieb0q01q389fe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE4qOy-M-_d77rxVz5eO2O9H7V2jGco5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195705933164-lifqcqopr323ktj1ij4ieb0q01q389fe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

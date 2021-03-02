@@ -1,17 +1,46 @@
-# waterApp
+# Flutter Universal Fitness App
 
-A new Flutter project.
+## Flutter core commands
+flutter build appbundle
+flutter build apk
+flutter build ios
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## icon and splashscreen commands
+flutter pub run flutter_launcher_icons:main
+flutter pub pub run flutter_native_splash:create
 
-A few resources to get you started if this is your first Flutter project:
+flutter pub run flutter_launcher_icons:main && flutter pub pub run flutter_native_splash:create
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Permission issue
+sudo chmod -R 777 ./
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# waterApp
+## Git
+### clear all commits until the last one on the origin (remote)
+git reset --hard origin/splits
+
+### unstage changes of the file of the merge
+    git reset -- android/app/src/main/res/drawable-mdpi/splash.png
+
+### unstage and discard changes of the files
+<!-- local HEAD -->
+git checkout HEAD -- ios/ 
+
+### git clone process
+<!-- change to pull of the branch -->
+git fetch origin buttocks
+git merge origin/buttocks
+
+<!-- change to current the branch -->
+git checkout origin/splits ios/  && git checkout origin/splits android/ && git checkout origin/splits lib/config.dart && git checkout origin/splits listing.txt && git checkout origin/splits assets/icon/  && git checkout origin/splits README.md
+
+<!-- change tp pull of the branch -->
+rm -r android/app/src/main/kotlin/com/verblike/buttocks/
+
+git add .
+
+### Git speed dial =)
+
+git fetch origin buttocks && git merge origin/buttocks 
+
+git checkout origin/splits ios/  && git checkout origin/splits android/ && git checkout origin/splits lib/config.dart && git checkout origin/splits listing.txt && git checkout origin/splits assets/icon/  && git checkout origin/splits README.md && rm -r android/app/src/main/kotlin/com/verblike/buttocks/ && git add .
