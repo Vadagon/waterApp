@@ -32,10 +32,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/',
+      initialRoute: '/setup',
       routes: {
         '/': (context) => HomeRoute(user: user, cb: cb),
         '/setup': (context) => SetupRoute(user: user, cb: cb),
