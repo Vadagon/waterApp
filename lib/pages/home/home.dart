@@ -20,22 +20,11 @@ class HomeState extends State<HomeRoute> {
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-    if (_counter > 5) {
-      Navigator.pushNamed(context, "/setup");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('123123'),
+        title: Text('2nd screen'),
       ),
       body: Center(
         child: Column(
@@ -44,17 +33,15 @@ class HomeState extends State<HomeRoute> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, "/");
+        },
+        tooltip: 'Prev',
+        child: Icon(Icons.skip_previous),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
