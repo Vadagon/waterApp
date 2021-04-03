@@ -5,6 +5,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'widgets/GenderSelect.dart';
+import 'widgets/HeightSelect.dart';
+import 'widgets/Remainder.dart';
+import 'widgets/YearsSelect.dart';
+import 'widgets/weightSelect.dart';
 
 class SetupRoute extends StatefulWidget {
   SetupRoute({this.user, this.cb});
@@ -27,7 +31,7 @@ class SetupState extends State<SetupRoute> {
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
-  int _current = 1;
+  int _current = 0;
   List _slides = [1, 2, 3, 4, 5, 6, 7, 8];
 
   Widget _slideIndex(int s) {
@@ -36,23 +40,16 @@ class SetupState extends State<SetupRoute> {
       return GenderSelect();
     }
     if (s == 2) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'how much years old a you?',
-            style: Theme.of(context).textTheme.headline1,
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 50),
-            child: SvgPicture.asset(
-              'assets/img/years_icon.svg',
-              width: 80,
-              height: 80,
-            ),
-          ),
-        ],
-      );
+      return YearsSelect();
+    }
+    if (s == 3) {
+      return WeightSelect();
+    }
+    if (s == 4){
+     return HeightSelect();
+    }
+     if (s == 5){
+     return ReminderSelect();
     }
   }
 
@@ -95,7 +92,6 @@ class SetupState extends State<SetupRoute> {
                     enableInfiniteScroll: false,
                     reverse: false,
                     autoPlay: false,
-                    // onPageChanged: ,
                     scrollDirection: Axis.horizontal,
                   ),
                   carouselController: _controller,

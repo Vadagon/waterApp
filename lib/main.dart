@@ -37,8 +37,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Montserrat',
          textTheme: TextTheme(
       headline1: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold,color: Color(0xffffffff)),
-      headline6: TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
-      bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+      headline6: TextStyle(fontSize: 16.0, ),
+      bodyText2: TextStyle(fontSize: 14.0, ),
+      caption: TextStyle(fontSize: 24.0, color: Color(0xff222222), fontWeight: FontWeight.bold,),
     ),
       ),
       initialRoute: '/setup',
