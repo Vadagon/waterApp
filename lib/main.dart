@@ -6,6 +6,7 @@ import 'db.dart';
 
 import 'pages/home/home.dart';
 import 'pages/setup/setup.dart';
+import 'themeData.dart';
 
 Map user = {};
 
@@ -31,31 +32,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Montserrat',
-        textTheme: TextTheme(
-          headline1: TextStyle(
-              fontSize: 26.0,
-              fontWeight: FontWeight.bold,
-              color: Color(0xffffffff)),
-          headline6: TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.bold,
-          ),
-          bodyText2: TextStyle(
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
-          ),
-          caption: TextStyle(
-            fontSize: 24.0,
-            color: Color(0xff222222),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      initialRoute: '/setup',
+      theme: appTheme,
+      initialRoute: '/',
       routes: {
         '/': (context) => HomeRoute(user: user, cb: cb),
         '/setup': (context) => SetupRoute(user: user, cb: cb),
