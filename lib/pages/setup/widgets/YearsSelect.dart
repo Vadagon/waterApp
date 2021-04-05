@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:direct_select/direct_select.dart';
+import 'package:flutter_svg/svg.dart';
 
-class YearsChoose extends StatefulWidget {
+class YearsSelect extends StatefulWidget {
   @override
-  _YearsChooseState createState() => _YearsChooseState();
+  _YearsSelectState createState() => _YearsSelectState();
 }
 
-class _YearsChooseState extends State<YearsChoose> {
+class _YearsSelectState extends State<YearsSelect> {
   var elements1 = [];
 
-  int selectedIndex1 = 8,
-      selectedIndex2 = 0,
-      selectedIndex3 = 0,
-      selectedIndex4 = 0;
+  int selectedIndex1 = 8;
 
   @override
   void initState() {
@@ -20,59 +18,45 @@ class _YearsChooseState extends State<YearsChoose> {
     super.initState();
   }
 
-  _generateArray(){
+  _generateArray() {
     return List<String>.generate(79, (index) => (index + 12).toString());
   }
-
 
   @override
   Widget build(BuildContext context) {
     // elements1 = List<String>.generate(240, (index) => (index + 30).toString());
-    return Scaffold(
-      body: Padding(
-        
-        padding: const EdgeInsets.all(15.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-          padding: EdgeInsets.only(bottom: 166),
-                
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/img/new-years-eve.png",
-                        width: 100,
-                      ),
-                     
-                      _mainSelect('Years', elements1, selectedIndex1),
-                        ],
-          ),
-              ),
-            ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'how much years old a you?',
+          style: Theme.of(context).textTheme.headline1,
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 50),
+          child: SvgPicture.asset(
+            'assets/img/years_icon.svg',
+            width: 80,
+            height: 80,
           ),
         ),
-      ),
+        _mainSelect('yo', elements1, selectedIndex1),
+      ],
     );
   }
 
   _mainSelect(title, arr, selectedIndex) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(color: Theme.of(context).accentColor,fontSize: 12),
-        ),
-        Container(
-          
-          width: 80,
-          child: DirectSelect(
-              itemExtent: 55.0,
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 150,
+            child: DirectSelect(
+              itemExtent: 45.0,
               selectedIndex: selectedIndex,
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor:Color(0xff1b61cb),
               child: MySelectionItem(
                 isForList: false,
                 title: arr[selectedIndex],
@@ -84,12 +68,16 @@ class _YearsChooseState extends State<YearsChoose> {
                 });
               },
               items: arr
-                  .map<Widget>((val) => MySelectionItem(
-                        title: val,
-                      ))
-                  .toList()),
-        ),
-      ],
+                  .map<Widget>(
+                    (val) => MySelectionItem(
+                      title: val,
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -104,45 +92,69 @@ class MySelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40.0,
+      height: 50.0,
       child: isForList
           ? Padding(
               child: _buildItemsSelect(context),
               padding: EdgeInsets.all(10.0),
             )
           : Container(
+              padding: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: const Color(0x40000000),
+                      offset: Offset(0, 4),
+                      blurRadius: 4,
+                      spreadRadius: 0)
+                ],
+              ),
               child: Stack(
                 children: <Widget>[
-                 _buildTitleSelect(context),
+                  _buildTitleSelect(context),
                   Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment(1, 2),
                     child: Icon(Icons.arrow_drop_down_rounded,
-                    color: Theme.of(context).accentColor,),
-                  )
+                        color: Colors.black),
+                  ),
+                  Align(
+                    alignment: Alignment(1, -2),
+                    child:
+                        Icon(Icons.arrow_drop_up_rounded, color: Colors.black),
+                  ),
                 ],
               ),
             ),
     );
   }
+
   _buildTitleSelect(BuildContext context) {
     return Container(
       color: Colors.transparent,
       margin: EdgeInsets.only(right: 10),
-      padding: EdgeInsets.all(0),
+      padding: EdgeInsets.all(00),
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.centerLeft,
-      child: Text(title),
+      child: Text(
+        title + ' yo',
+        style: Theme.of(context).textTheme.caption,
+      ),
     );
   }
-
-
 
   _buildItemsSelect(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: Text(title),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.caption,
+      ),
     );
   }
 }
