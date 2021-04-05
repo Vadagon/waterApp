@@ -7,7 +7,7 @@ class ReminderSelect extends StatefulWidget {
 }
 
 class _ReminderSelectState extends State<ReminderSelect> {
-  bool _gender = false;
+  String remindTime = "Every 1 hour";
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +16,7 @@ class _ReminderSelectState extends State<ReminderSelect> {
       children: [
         Container(
           child: Text("how often do you want to \n recive reminders?",
-              style: const TextStyle(
-                  color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Montserrat",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 22.0),
-              textAlign: TextAlign.center),
+              style: Theme.of(context).textTheme.headline1,textAlign: TextAlign.center,),
         ),
         Container(
           margin: EdgeInsets.only(top: 50, right: 20),
@@ -43,21 +37,46 @@ class _ReminderSelectState extends State<ReminderSelect> {
                   height: 50,
                   padding: EdgeInsets.all(12),
                   margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-                  decoration: !_gender
+                  decoration: remindTime == 'Every 1 hour'
                       ? BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                          color: const Color(0xffffffff))
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x40000000),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 0)
+                          ],
+                          color: const Color(0xb0ac2727))
                       : BoxDecoration(
-                          color: const Color(0xb0ac2727),
+                          color: const Color(0xffffffff),
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x40000000),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 0)
+                          ],
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
-                  child: Text('Every 1 hour'),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Every 1 hour',
+                          style: remindTime == 'Every 1 hour'
+                              ? Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(color: Color(0xffffffff))
+                              : Theme.of(context).textTheme.headline6)
+                    ],
+                  ),
                 ),
                 onTap: () {
                   setState(() {
-                    _gender = false;
+                    remindTime = 'Every 1 hour';
                   });
-                  print(_gender);
                 },
               ),
               InkWell(
@@ -66,21 +85,46 @@ class _ReminderSelectState extends State<ReminderSelect> {
                   height: 50,
                   padding: EdgeInsets.all(15),
                   margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-                  decoration: _gender
+                  decoration: remindTime == 'Every 2 hour'
                       ? BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                          color: const Color(0xffffffff))
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x40000000),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 0)
+                          ],
+                          color: const Color(0xb0ac2727))
                       : BoxDecoration(
-                          color: const Color(0xb0ac2727),
+                          color: const Color(0xffffffff),
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x40000000),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 0)
+                          ],
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
-                  child: Text('Every 2 hour', style:Theme.of(context).textTheme.headline6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                     Text('Every 2 hour',
+                          style: remindTime == 'Every 2 hour'
+                              ? Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(color: Color(0xffffffff))
+                              : Theme.of(context).textTheme.headline6)
+                    ],
+                  ),
                 ),
                 onTap: () {
                   setState(() {
-                    _gender = true;
+                    remindTime = 'Every 2 hour';
                   });
-                  print(_gender);
                 },
               ),
               InkWell(
@@ -89,21 +133,47 @@ class _ReminderSelectState extends State<ReminderSelect> {
                   height: 50,
                   padding: EdgeInsets.all(12),
                   margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
-                  decoration: _gender
+                  decoration: remindTime == 'Do not remind'
                       ? BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                          color: const Color(0xffffffff))
-                      : BoxDecoration(
                           color: const Color(0xb0ac2727),
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x40000000),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 0)
+                          ],
+                        )
+                      : BoxDecoration(
+                          color: const Color(0xffffffff),
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x40000000),
+                                offset: Offset(0, 4),
+                                blurRadius: 4,
+                                spreadRadius: 0)
+                          ],
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
-                  child: Text('do not remind'),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Do not remind',
+                          style: remindTime == 'Do not remind'
+                              ? Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(color: Color(0xffffffff))
+                              : Theme.of(context).textTheme.headline6)
+                    ],
+                  ),
                 ),
                 onTap: () {
                   setState(() {
-                    _gender = true;
+                    remindTime = 'Do not remind';
                   });
-                  print(_gender);
                 },
               ),
             ],

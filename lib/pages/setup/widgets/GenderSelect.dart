@@ -21,13 +21,7 @@ class _GenderSelectState extends State<GenderSelect> {
           Container(
             margin: EdgeInsets.only(top: 15),
             child: Text("Select your gender?",
-                style: const TextStyle(
-                    color: const Color(0xffffffff),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Montserrat",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 22.0),
-                textAlign: TextAlign.left),
+                            style: Theme.of(context).textTheme.headline1,),
           ),
           Container(
             margin: EdgeInsets.only(top: 50),

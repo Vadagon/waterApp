@@ -7,7 +7,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'widgets/GenderSelect.dart';
 import 'widgets/HeightSelect.dart';
 import 'widgets/Remainder.dart';
+import 'widgets/WakeUp.dart';
 import 'widgets/YearsSelect.dart';
+import 'widgets/activity.dart';
 import 'widgets/weightSelect.dart';
 
 class SetupRoute extends StatefulWidget {
@@ -51,6 +53,15 @@ class SetupState extends State<SetupRoute> {
      if (s == 5){
      return ReminderSelect();
     }
+     if (s == 6){
+     return WakeUpSelect(title:'Wake up time',img: 'wakeUp', finalIndex: 8,);
+    }
+     if (s == 7){
+     return WakeUpSelect(title:'Time to sleep',img: 'sleepTime', finalIndex: 22,);
+    }
+     if (s == 8){
+     return ActivitySelect();
+    }
   }
 
   @override
@@ -58,7 +69,8 @@ class SetupState extends State<SetupRoute> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Column(
+      body: 
+      Column(
         children: [
           Stack(
             children: [
@@ -105,7 +117,7 @@ class SetupState extends State<SetupRoute> {
                 ),
               ),
               Positioned(
-                top: 25,
+                top: 50,
                 child: Container(
                   width: size.width,
                   child: Row(
@@ -147,7 +159,9 @@ class SetupState extends State<SetupRoute> {
                       ),
                     ),
                   ),
-                  onTap: () => _controller.nextPage(),
+                  onTap: () => {
+                    if (_current==7){Navigator.pushNamed(context, '/')}
+                  else {_controller.nextPage()}},
                 ),
               ),
               _current != 0
