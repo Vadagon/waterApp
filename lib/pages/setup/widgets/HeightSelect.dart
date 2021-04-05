@@ -3,25 +3,28 @@ import 'package:direct_select/direct_select.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HeightSelect extends StatefulWidget {
+  final Function cb;
+  HeightSelect(this.cb);
+
   @override
-  _HeightSelectState createState() => _HeightSelectState();
+  _HeightSelectState createState() => _HeightSelectState(cb);
 }
 
 class _HeightSelectState extends State<HeightSelect> {
-  var elements1 = [];
-  final elements2 = ["cm", "ft"];
+  final Function cb;
+  _HeightSelectState(this.cb);
 
-  int selectedIndex1 = 81,
-      selectedIndex2 = 0;
+  var unitsCm = [];
+  var unitsInch = [];
+  final unitsType = ["cm", "inch"];
+
+  int unitsId = 81, unitsTypeId = 0;
 
   @override
   void initState() {
-    elements1 = _generateArray();
+    unitsCm = List<String>.generate(240, (index) => (index + 80).toString());
+    unitsInch = List<String>.generate(95, (index) => (index + 32).toString());
     super.initState();
-  }
-
-  _generateArray(){
-    return List<String>.generate(240, (index) => (index + 80).toString());
   }
   // List<Widget> _buildItems1() {
   //   return ;
@@ -29,8 +32,7 @@ class _HeightSelectState extends State<HeightSelect> {
 
   @override
   Widget build(BuildContext context) {
-    
-    // elements1 = List<String>.generate(240, (index) => (index + 30).toString());
+    // units = List<String>.generate(240, (index) => (index + 30).toString());
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -48,33 +50,27 @@ class _HeightSelectState extends State<HeightSelect> {
         ),
         Container(
           margin: EdgeInsets.only(top: 50),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            _mainSelect(
+                unitsType[unitsTypeId],
+                unitsTypeId == 0 ? unitsCm : unitsInch,
+                unitsId,
+                (idd) => unitsId = idd),
+            _mainSelect('Units', unitsType, unitsTypeId, (idd) {
+              if (unitsTypeId == idd) return;
 
-          child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _mainSelect(elements2[selectedIndex2], elements1, selectedIndex1,
-                          (idd) => selectedIndex1 = idd),
-                      _mainSelect('Units', elements2, selectedIndex2, (idd) {
-                        if(selectedIndex2 == idd) return;
-                        selectedIndex2 = idd;
-
-                        if(idd==0) {
-                          elements1 = _generateArray();
-                          selectedIndex1 = (selectedIndex1 / 0.032808399).round();
-                        }else{
-                          elements1 = List<String>.generate((240*0.032808399).round(), (index) => (index + (30*0.032808399).round()).toString());
-                          selectedIndex1 = (selectedIndex1 * 0.032808399).round();
-                        }
-                        
-                        selectedIndex1>100?selectedIndex1--:selectedIndex1++;
-                        setState(() {
-                          elements1 = elements1.map<String>((e) {
-                            return (double.parse(e) * 0.32808399).round().toString();
-                          }).toList();
-                        });
-                      })
-                    ]),
-          ),
+              setState(() {
+                unitsTypeId = idd;
+                if (idd == 0) {
+                  unitsId = (unitsId * 2.54).round();
+                } else {
+                  unitsId = (unitsId / 2.54).round();
+                }
+                unitsId > 100 ? unitsId-- : unitsId++;
+              });
+            })
+          ]),
+        ),
       ],
     );
   }
@@ -83,10 +79,8 @@ class _HeightSelectState extends State<HeightSelect> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      
         Container(
-              margin: EdgeInsets.all(10.0),
-          
+          margin: EdgeInsets.all(10.0),
           width: 80,
           child: DirectSelect(
               itemExtent: 55.0,
@@ -130,7 +124,7 @@ class MySelectionItem extends StatelessWidget {
               padding: EdgeInsets.all(10.0),
             )
           : Container(
-            padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
@@ -162,14 +156,18 @@ class MySelectionItem extends StatelessWidget {
             ),
     );
   }
- _buildTitleSelect(BuildContext context) {
+
+  _buildTitleSelect(BuildContext context) {
     return Container(
       color: Colors.transparent,
       margin: EdgeInsets.only(right: 10),
       padding: EdgeInsets.all(0),
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.centerLeft,
-      child: Text(title, style: Theme.of(context).textTheme.caption,),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.caption,
+      ),
     );
   }
 
@@ -178,7 +176,10 @@ class MySelectionItem extends StatelessWidget {
       margin: EdgeInsets.only(right: 10),
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: Text(title,style: Theme.of(context).textTheme.caption,),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.caption,
+      ),
     );
   }
 }

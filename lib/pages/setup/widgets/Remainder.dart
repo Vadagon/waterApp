@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ReminderSelect extends StatefulWidget {
+  final Function cb;
+  ReminderSelect(this.cb);
+
   @override
-  _ReminderSelectState createState() => _ReminderSelectState();
+  _ReminderSelectState createState() => _ReminderSelectState(cb);
 }
 
 class _ReminderSelectState extends State<ReminderSelect> {
+  Function cb;
+  _ReminderSelectState(cb);
+
   String remindTime = "Every 1 hour";
 
   @override
@@ -15,8 +21,11 @@ class _ReminderSelectState extends State<ReminderSelect> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          child: Text("how often do you want to \n recive reminders?",
-              style: Theme.of(context).textTheme.headline1,textAlign: TextAlign.center,),
+          child: Text(
+            "how often do you want to \n recive reminders?",
+            style: Theme.of(context).textTheme.headline1,
+            textAlign: TextAlign.center,
+          ),
         ),
         Container(
           margin: EdgeInsets.only(top: 50, right: 20),
@@ -111,7 +120,7 @@ class _ReminderSelectState extends State<ReminderSelect> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                     Text('Every 2 hour',
+                      Text('Every 2 hour',
                           style: remindTime == 'Every 2 hour'
                               ? Theme.of(context)
                                   .textTheme

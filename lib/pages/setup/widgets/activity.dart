@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ActivitySelect extends StatefulWidget {
+  final Function cb;
+  ActivitySelect(this.cb);
+
   @override
-  _ActivitySelectState createState() => _ActivitySelectState();
+  _ActivitySelectState createState() => _ActivitySelectState(this.cb);
 }
 
 class _ActivitySelectState extends State<ActivitySelect> {
+  final Function cb;
+  _ActivitySelectState(this.cb);
+
   String remindTime = "NORMAL";
 
   @override
@@ -159,9 +165,9 @@ class _ActivitySelectState extends State<ActivitySelect> {
               ),
               InkWell(
                 child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     SvgPicture.asset(
+                    SvgPicture.asset(
                       'assets/img/a3.svg',
                       width: 50,
                       height: 50,
@@ -173,7 +179,8 @@ class _ActivitySelectState extends State<ActivitySelect> {
                       margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
                       decoration: remindTime == 'ACTIVE'
                           ? BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
                               color: const Color(0xb0ac2727),
                               boxShadow: [
                                 BoxShadow(
@@ -192,7 +199,8 @@ class _ActivitySelectState extends State<ActivitySelect> {
                                     blurRadius: 4,
                                     spreadRadius: 0)
                               ],
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
                             ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,9 +226,9 @@ class _ActivitySelectState extends State<ActivitySelect> {
               ),
               InkWell(
                 child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     SvgPicture.asset(
+                    SvgPicture.asset(
                       'assets/img/a4.svg',
                       width: 50,
                       height: 50,
@@ -232,7 +240,8 @@ class _ActivitySelectState extends State<ActivitySelect> {
                       margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
                       decoration: remindTime == 'VERY ACTIVE'
                           ? BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
                               color: const Color(0xb0ac2727),
                               boxShadow: [
                                 BoxShadow(
@@ -251,7 +260,8 @@ class _ActivitySelectState extends State<ActivitySelect> {
                                     blurRadius: 4,
                                     spreadRadius: 0)
                               ],
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
                             ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

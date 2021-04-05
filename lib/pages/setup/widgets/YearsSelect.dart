@@ -3,11 +3,25 @@ import 'package:direct_select/direct_select.dart';
 import 'package:flutter_svg/svg.dart';
 
 class YearsSelect extends StatefulWidget {
+  YearsSelect(this.cb);
+  final Function cb;
+
   @override
-  _YearsSelectState createState() => _YearsSelectState();
+  _YearsSelectState createState() => _YearsSelectState(this.cb);
+
+  // SetupRoute({this.user, this.cb});
+  // final dynamic user;
+  // final Function cb;
+
+  // @override
+  // _YearsSelectState createState() => _YearsSelectState(user, cb);
+
 }
 
 class _YearsSelectState extends State<YearsSelect> {
+  _YearsSelectState(this.cb);
+  Function cb;
+
   var elements1 = [];
 
   int selectedIndex1 = 8;
@@ -22,14 +36,19 @@ class _YearsSelectState extends State<YearsSelect> {
     return List<String>.generate(79, (index) => (index + 12).toString());
   }
 
+  sendData() {
+    cb({'age': elements1[selectedIndex1]});
+  }
+
   @override
   Widget build(BuildContext context) {
+    sendData();
     // elements1 = List<String>.generate(240, (index) => (index + 30).toString());
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'how much years old a you?',
+          'how old are you?',
           style: Theme.of(context).textTheme.headline1,
         ),
         Container(
@@ -56,7 +75,7 @@ class _YearsSelectState extends State<YearsSelect> {
             child: DirectSelect(
               itemExtent: 45.0,
               selectedIndex: selectedIndex,
-              backgroundColor:Color(0xff1b61cb),
+              backgroundColor: Color(0xff1b61cb),
               child: MySelectionItem(
                 isForList: false,
                 title: arr[selectedIndex],

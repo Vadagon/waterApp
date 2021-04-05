@@ -6,20 +6,21 @@ class WakeUpSelect extends StatefulWidget {
   final String title;
   final int finalIndex;
   final String img;
-  WakeUpSelect({this.title, this.img, this.finalIndex});
+  final Function cb;
+  WakeUpSelect({this.title, this.img, this.finalIndex, this.cb});
 
   @override
-  _WakeUpSelectState createState() => _WakeUpSelectState(title,img, finalIndex);
+  _WakeUpSelectState createState() =>
+      _WakeUpSelectState(title, img, finalIndex, cb);
 }
 
 class _WakeUpSelectState extends State<WakeUpSelect> {
   var elements1 = [];
   final String title;
   final String img;
+  final Function cb;
   int finalIndex;
-  _WakeUpSelectState(this.title, this.img, this.finalIndex);
-  
-
+  _WakeUpSelectState(this.title, this.img, this.finalIndex, this.cb);
 
   @override
   void initState() {
@@ -65,7 +66,7 @@ class _WakeUpSelectState extends State<WakeUpSelect> {
             child: DirectSelect(
               itemExtent: 45.0,
               selectedIndex: selectedIndex,
-              backgroundColor:Color(0xff1b61cb),
+              backgroundColor: Color(0xff1b61cb),
               child: MySelectionItem(
                 isForList: false,
                 title: arr[selectedIndex],
@@ -161,7 +162,7 @@ class MySelectionItem extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Text(
-        title+ ':00',
+        title + ':00',
         style: Theme.of(context).textTheme.caption,
       ),
     );

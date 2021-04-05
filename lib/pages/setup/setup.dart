@@ -33,35 +33,50 @@ class SetupState extends State<SetupRoute> {
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
+  processSetupData(e) {
+    print(e);
+  }
+
   int _current = 0;
   List _slides = [1, 2, 3, 4, 5, 6, 7, 8];
 
   Widget _slideIndex(int s) {
     print(s);
     if (s == 1) {
-      return GenderSelect();
+      return GenderSelect(processSetupData);
     }
     if (s == 2) {
-      return YearsSelect();
+      return YearsSelect(processSetupData);
     }
     if (s == 3) {
-      return WeightSelect();
+      return WeightSelect(processSetupData);
     }
-    if (s == 4){
-     return HeightSelect();
+    if (s == 4) {
+      return HeightSelect(processSetupData);
     }
-     if (s == 5){
-     return ReminderSelect();
+    if (s == 5) {
+      return ReminderSelect(processSetupData);
     }
-     if (s == 6){
-     return WakeUpSelect(title:'Wake up time',img: 'wakeUp', finalIndex: 8,);
+    if (s == 6) {
+      return WakeUpSelect(
+        cb: processSetupData,
+        title: 'Wake up time',
+        img: 'wakeUp',
+        finalIndex: 8,
+      );
     }
-     if (s == 7){
-     return WakeUpSelect(title:'Time to sleep',img: 'sleepTime', finalIndex: 22,);
+    if (s == 7) {
+      return WakeUpSelect(
+        cb: processSetupData,
+        title: 'Time to sleep',
+        img: 'sleepTime',
+        finalIndex: 22,
+      );
     }
-     if (s == 8){
-     return ActivitySelect();
+    if (s == 8) {
+      return ActivitySelect(cb);
     }
+    return ActivitySelect(cb);
   }
 
   @override
@@ -69,8 +84,7 @@ class SetupState extends State<SetupRoute> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: 
-      Column(
+      body: Column(
         children: [
           Stack(
             children: [
@@ -160,8 +174,11 @@ class SetupState extends State<SetupRoute> {
                     ),
                   ),
                   onTap: () => {
-                    if (_current==7){Navigator.pushNamed(context, '/')}
-                  else {_controller.nextPage()}},
+                    if (_current == 7)
+                      {Navigator.pushNamed(context, '/')}
+                    else
+                      {_controller.nextPage()}
+                  },
                 ),
               ),
               _current != 0
