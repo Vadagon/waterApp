@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/setup',
+      initialRoute: '/',
       routes: {
         '/': (context) => HomeRoute(user: user, cb: cb),
         '/setup': (context) => SetupRoute(user: user, cb: cb),
