@@ -14,7 +14,7 @@ class DB {
     'wakeTime': ['8:00', '23: 00'],
     'bodyShape': 'regular',
     'weight': '65',
-    'birthDate': '03/11/1998',
+    'age': '25',
     'gender': 'female',
     'remindFrequency': '60', // minutes
   };

@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:convert';
 
 import 'widgets/GenderSelect.dart';
 import 'widgets/HeightSelect.dart';
@@ -27,14 +28,19 @@ class SetupState extends State<SetupRoute> {
   Function cb;
   SetupState(this.user, this.cb);
 
+  Map data;
   @override
   initState() {
+    data = jsonDecode(jsonEncode(user));
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
   processSetupData(e) {
+    data = {...data, ...e};
+    print('processSetupData');
     print(e);
+    print(data);
   }
 
   int _current = 0;
@@ -173,11 +179,13 @@ class SetupState extends State<SetupRoute> {
                       ),
                     ),
                   ),
-                  onTap: () => {
-                    if (_current == 7)
-                      {Navigator.pushNamed(context, '/')}
-                    else
-                      {_controller.nextPage()}
+                  onTap: () {
+                    if (_current == 7) {
+                      Navigator.pushNamed(context, '/');
+                      cb(data);
+                    } else {
+                      _controller.nextPage();
+                    }
                   },
                 ),
               ),
