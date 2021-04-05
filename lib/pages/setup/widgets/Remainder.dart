@@ -11,12 +11,18 @@ class ReminderSelect extends StatefulWidget {
 
 class _ReminderSelectState extends State<ReminderSelect> {
   Function cb;
-  _ReminderSelectState(cb);
+  _ReminderSelectState(this.cb);
 
   String remindTime = "Every 1 hour";
 
+  sendData() {
+    cb({'reminder': remindTime});
+    // cb({'weight': 12});
+  }
+
   @override
   Widget build(BuildContext context) {
+    sendData();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

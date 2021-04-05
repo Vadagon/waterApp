@@ -15,8 +15,14 @@ class _ActivitySelectState extends State<ActivitySelect> {
 
   String remindTime = "NORMAL";
 
+  sendData() {
+    cb({'activity': remindTime});
+    // cb({'weight': 12});
+  }
+
   @override
   Widget build(BuildContext context) {
+    sendData();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

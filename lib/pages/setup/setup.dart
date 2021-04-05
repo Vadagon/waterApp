@@ -74,9 +74,9 @@ class SetupState extends State<SetupRoute> {
       );
     }
     if (s == 8) {
-      return ActivitySelect(cb);
+      return ActivitySelect(processSetupData);
     }
-    return ActivitySelect(cb);
+    return ActivitySelect(processSetupData);
   }
 
   @override

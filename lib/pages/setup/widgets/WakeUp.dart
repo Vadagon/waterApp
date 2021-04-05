@@ -32,8 +32,14 @@ class _WakeUpSelectState extends State<WakeUpSelect> {
     return List<String>.generate(24, (index) => index.toString());
   }
 
+  sendData() {
+    cb({!title.contains('sleep') ? 'wakeUp' : 'sleep': finalIndex});
+    // cb({'weight': 12});
+  }
+
   @override
   Widget build(BuildContext context) {
+    sendData();
     // elements1 = List<String>.generate(240, (index) => (index + 30).toString());
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

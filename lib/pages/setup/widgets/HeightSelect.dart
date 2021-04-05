@@ -26,12 +26,23 @@ class _HeightSelectState extends State<HeightSelect> {
     unitsInch = List<String>.generate(95, (index) => (index + 32).toString());
     super.initState();
   }
+
   // List<Widget> _buildItems1() {
   //   return ;
   // }
+  //
+  sendData() {
+    cb({
+      'height': unitsTypeId == 0
+          ? unitsCm[unitsId]
+          : (int.parse(unitsInch[unitsId]) * 2.54).round()
+    });
+    // cb({'weight': 12});
+  }
 
   @override
   Widget build(BuildContext context) {
+    sendData();
     // units = List<String>.generate(240, (index) => (index + 30).toString());
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

@@ -36,12 +36,12 @@ class _WeightSelectState extends State<WeightSelect> {
   // }
   //
   sendData() {
-    // cb({
-    //   'weight': selectedUnit == 0
-    //       ? kilosList[uniqueWeightId]
-    //       : (poundsList[uniqueWeightId] * 2.20462).round()
-    // });
-    cb({'weight': 12});
+    cb({
+      'weight': selectedUnit == 0
+          ? kilosList[uniqueWeightId]
+          : (2.20462 * int.parse(poundsList[uniqueWeightId])).round()
+    });
+    // cb({'weight': 12});
   }
 
   @override
