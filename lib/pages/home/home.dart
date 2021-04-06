@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../waterCalculator.dart';
 
 import 'overlaySlider.dart';
 
@@ -48,7 +47,7 @@ class HomeState extends State<HomeRoute> {
           children: [
             Container(
               width: contextSize.width,
-              height: contextSize.height - padding.top,
+              height: contextSize.height - padding.top - padding.bottom,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomRight,

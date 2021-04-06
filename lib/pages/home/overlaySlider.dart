@@ -10,23 +10,23 @@ showOvarlay(BuildContext context) async {
       left: 0,
       child: Container(
         width: contextSize.width,
-        color: Colors.green,
+        // color: Colors.green,
         padding: EdgeInsets.only(top: padding.top),
         height: contextSize.height - padding.bottom,
-        // decoration: BoxDecoration(
-        //   // gradient: LinearGradient(
-        //   //   begin: Alignment.bottomRight,
-        //   //   end: Alignment.topLeft,
-        //   //   stops: [
-        //   //     0.0,
-        //   //     0.8,
-        //   //   ],
-        //   //   colors: [
-        //   //     Color(0xff00D7CA),
-        //   //     Color(0xcff1B61CB),
-        //   //   ],
-        //   // ),
-        // ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+            stops: [
+              0.0,
+              0.8,
+            ],
+            colors: [
+              Color(0xff00D7CA),
+              Color(0xcff1B61CB),
+            ],
+          ),
+        ),
         child: Stack(
           children: [
             Positioned(
@@ -62,9 +62,13 @@ class _SliderOverlayState extends State<SliderOverlay> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        decoration:BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: Color(0xFF9DEDFF),
+
+        ),
           height: widget.contextSize.height / 2,
           width: 50,
-          color: Color(0xFF9DEDFF),
           child:Stack(
             children: [
               Positioned(
