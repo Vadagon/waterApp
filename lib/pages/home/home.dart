@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../waterCalculator.dart';
 
 import 'overlaySlider.dart';
 
@@ -19,6 +20,10 @@ class HomeState extends State<HomeRoute> {
 
   @override
   initState() {
+    print(user);
+    // num dailyQuota = waterCalculator(user);
+    // print(user['quota']);
+
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
@@ -31,6 +36,7 @@ class HomeState extends State<HomeRoute> {
 
   double btnHeight = 46;
   double _valueS = 1.00;
+  var todayDrunked = 400;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +135,7 @@ class HomeState extends State<HomeRoute> {
                                 height: contextSize.height / 2,
                               ),
                               Text(
-                                '12/1900',
+                                '$todayDrunked/${user['quota']}',
                                 style: Theme.of(context).textTheme.bodyText1,
                                 textAlign: TextAlign.center,
                               ),
@@ -294,5 +300,4 @@ class HomeState extends State<HomeRoute> {
       ),
     );
   }
-
 }

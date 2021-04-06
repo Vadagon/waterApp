@@ -13,6 +13,8 @@ import 'widgets/YearsSelect.dart';
 import 'widgets/activity.dart';
 import 'widgets/weightSelect.dart';
 
+import '../../waterCalculator.dart';
+
 class SetupRoute extends StatefulWidget {
   SetupRoute({this.user, this.cb});
   final dynamic user;
@@ -182,6 +184,7 @@ class SetupState extends State<SetupRoute> {
                   onTap: () {
                     if (_current == 7) {
                       Navigator.pushNamed(context, '/');
+                      data['quota'] = waterCalculator(data);
                       cb(data);
                     } else {
                       _controller.nextPage();
