@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: appTheme,
-      initialRoute: '/setup',
+      initialRoute: '/',
       routes: {
         '/': (context) => HomeRoute(user: user, cb: cb),
         '/setup': (context) => SetupRoute(user: user, cb: cb),

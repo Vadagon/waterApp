@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'overlaySlider.dart';
+
 class HomeRoute extends StatefulWidget {
   HomeRoute({this.user, this.cb});
   final dynamic user;
   final Function cb;
-
   @override
   HomeState createState() => HomeState(user, cb);
 }
@@ -14,6 +15,7 @@ class HomeState extends State<HomeRoute> {
   Map user;
   Function cb;
   HomeState(this.user, this.cb);
+  GlobalKey _keyRed = GlobalKey();
 
   @override
   initState() {
@@ -21,12 +23,21 @@ class HomeState extends State<HomeRoute> {
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
+  _getPositions() {
+    final RenderBox renderBoxRed = _keyRed.currentContext.findRenderObject();
+    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
+    print("POSITION of Red: $positionRed ");
+  }
+
+  double btnHeight = 46;
+  double _valueS = 1.00;
+
   @override
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
     EdgeInsets padding = MediaQuery.of(context).padding;
-
     return Scaffold(
+      backgroundColor: Color(0xFF1B61CB),
       body: SafeArea(
         child: Column(
           children: [
@@ -47,6 +58,8 @@ class HomeState extends State<HomeRoute> {
                   ],
                 ),
               ),
+              // BG GRADIENT AND SIZE WINDOW
+
               child: Column(
                 children: [
                   Container(
@@ -75,6 +88,7 @@ class HomeState extends State<HomeRoute> {
                       ],
                     ),
                   ),
+                  // APP BAR ICONS
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
@@ -89,66 +103,186 @@ class HomeState extends State<HomeRoute> {
                       ],
                       color: Color(0xA668C4FB),
                     ),
+                    width: double.infinity,
                     child: Text(
                       'Коли організм зневоднений, обмін речовин сповільнюється. Порушення метаболізму може привести до набору ваги.',
                       style: Theme.of(context).textTheme.bodyText2,
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        clipBehavior: Clip.antiAlias,
-                        margin:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 45),
-                        width: 17,
-                        height: contextSize.height / 5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                                color: const Color(0x40000000),
-                                offset: Offset(4, 4),
-                                blurRadius: 4,
-                                spreadRadius: 0)
-                          ],
-                          color: Color(0xFFFFFFFF),
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              bottom: 0,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: 1,
-                                    width: 17,
-                                    // color: Color(0xFFFFFFFF),
-                                    color: Colors.red,
-                                  ),
-                                  Container(
-                                    height: 200,
-                                    width: 17,
-                                    color: Color(0xA668C4FB),
-                                  ),
-                                ],
+                  // HINT
+                  //
+
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // AQUARIUM
+                        Text(''),
+                        Container(
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/img/avatar.svg',
+                                height: contextSize.height / 2,
                               ),
-                            ),
-                          ],
+                              Text(
+                                '12/1900',
+                                style: Theme.of(context).textTheme.bodyText1,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        // WATERBAR
+                        Container(
+                          clipBehavior: Clip.antiAlias,
+                          width: 17,
+                          height: contextSize.height / 2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: const Color(0x40000000),
+                                  offset: Offset(4, 4),
+                                  blurRadius: 4,
+                                  spreadRadius: 0)
+                            ],
+                            color: Color(0xFFFFFFFF),
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                bottom: 0,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 1,
+                                      width: 17,
+                                      // color: Color(0xFFFFFFFF),
+                                      color: Colors.red,
+                                    ),
+                                    Container(
+                                      height: 200,
+                                      width: 17,
+                                      color: Color(0xA668C4FB),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 201,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 1,
+                                      width: 17,
+                                      // color: Color(0xFFFFFFFF),
+                                      color: Colors.red,
+                                    ),
+                                    Container(
+                                      height: 20,
+                                      width: 17,
+                                      color: Color(0xA668C4FB),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 222,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 1,
+                                      width: 17,
+                                      // color: Color(0xFFFFFFFF),
+                                      color: Colors.red,
+                                    ),
+                                    Container(
+                                      height: 20,
+                                      width: 17,
+                                      color: Color(0xA668C4FB),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Container(
-                    child:Column(
+                    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         SvgPicture.asset(
-                            'assets/img/aquarium1.svg',
-                            width: contextSize.height / 5,
+                        RawMaterialButton(
+                          constraints:
+                              BoxConstraints.tightFor(width: 50, height: 50),
+                          onPressed: () {
+                            showOvarlay(context);
+                            _getPositions();
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: SvgPicture.asset(
+                            'assets/img/drop.svg',
                           ),
-                          Text('0/1900',
-                           style: Theme.of(context).textTheme.bodyText1,
-                      textAlign: TextAlign.center,),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                          key: _keyRed,
+                        ),
+                        RawMaterialButton(
+                          constraints:
+                              BoxConstraints.tightFor(width: 50, height: 50),
+                          onPressed: () {},
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: SvgPicture.asset(
+                            'assets/img/milk.svg',
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        ),
+                        RawMaterialButton(
+                          constraints:
+                              BoxConstraints.tightFor(width: 50, height: 50),
+                          onPressed: () {},
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: SvgPicture.asset(
+                            'assets/img/tea.svg',
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        ),
+                        RawMaterialButton(
+                          constraints:
+                              BoxConstraints.tightFor(width: 50, height: 50),
+                          onPressed: () {},
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: SvgPicture.asset(
+                            'assets/img/coffee.svg',
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        ),
+                        RawMaterialButton(
+                          constraints:
+                              BoxConstraints.tightFor(width: 50, height: 50),
+                          onPressed: () {},
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: SvgPicture.asset(
+                            'assets/img/juice.svg',
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        ),
                       ],
                     ),
                   ),
@@ -160,4 +294,5 @@ class HomeState extends State<HomeRoute> {
       ),
     );
   }
+
 }
