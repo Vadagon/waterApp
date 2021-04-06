@@ -30,7 +30,6 @@ class HomeState extends State<HomeRoute> {
   }
 
   double btnHeight = 46;
-  double _valueS = 1.00;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class HomeState extends State<HomeRoute> {
           children: [
             Container(
               width: contextSize.width,
-              height: contextSize.height - padding.top - padding.bottom,
+              height: contextSize.height - padding.top ,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomRight,
