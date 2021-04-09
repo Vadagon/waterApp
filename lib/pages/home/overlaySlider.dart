@@ -4,6 +4,7 @@ double dragPoint = 0.0;
 showOvarlay(BuildContext context) async {
   Size contextSize = MediaQuery.of(context).size;
   EdgeInsets padding = MediaQuery.of(context).padding;
+  Function cb;
   OverlayState overlayState = Overlay.of(context);
   OverlayEntry overlayEntry = OverlayEntry(
     builder: (context) => Positioned(
@@ -33,13 +34,16 @@ showOvarlay(BuildContext context) async {
             Positioned(
               left: 45,
               bottom: 40,
-              child: SliderOverlay(contextSize: contextSize),
+              child: SliderOverlay(cb: cb, contextSize: contextSize),
             ),
           ],
         ),
       ),
     ),
   );
+  cb = () {
+    overlayEntry.remove();
+  };
   overlayState.insert(overlayEntry);
   await Future.delayed(Duration(seconds: 1000));
   overlayEntry.remove();
@@ -49,15 +53,20 @@ class SliderOverlay extends StatefulWidget {
   const SliderOverlay({
     Key key,
     @required this.contextSize,
+    @required this.cb,
   }) : super(key: key);
 
+  final Function cb;
   final Size contextSize;
 
   @override
-  _SliderOverlayState createState() => _SliderOverlayState();
+  _SliderOverlayState createState() => _SliderOverlayState(cb);
 }
 
 class _SliderOverlayState extends State<SliderOverlay> {
+  _SliderOverlayState(this.cb);
+  final Function cb;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -109,19 +118,23 @@ class _SliderOverlayState extends State<SliderOverlay> {
                 ),
               ),
               Positioned(
-                top: dragPoint+40,
+                top: dragPoint + 40,
                 child: Container(
-                   decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: Color(0xFF27C1E2),
-              ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Color(0xFF27C1E2),
+                  ),
                   width: 80,
                   height: 40,
                   child: Center(
                     child: TextButton(
-                      child: Text('add',style: Theme.of(context).textTheme.bodyText1),
-                      onPressed: (){print(dragPoint.toStringAsFixed(0));},
-                  ),
+                      child: Text('add',
+                          style: Theme.of(context).textTheme.bodyText1),
+                      onPressed: () {
+                        cb();
+                        print(dragPoint.toStringAsFixed(0));
+                      },
+                    ),
                   ),
                 ),
               ),
