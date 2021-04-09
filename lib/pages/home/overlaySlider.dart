@@ -66,7 +66,7 @@ class SliderOverlay extends StatefulWidget {
 class _SliderOverlayState extends State<SliderOverlay> {
   _SliderOverlayState(this.cb);
   final Function cb;
-
+  double ml=0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,9 +97,15 @@ class _SliderOverlayState extends State<SliderOverlay> {
             setState(() {
               dragPoint = axis.localPosition.dy;
             });
-            print(axis.localPosition.direction);
-            print(axis.localPosition.distance);
-            print(axis.localPosition.distanceSquared);
+            var maxHeight = widget.contextSize.height / 2;
+            var percent = (dragPoint / maxHeight )* 100;
+            var maxLitres = 1000;
+            var litres = maxLitres * (percent/100);
+             ml = (litres - 1000).abs();
+            print(ml);
+            // print(axis.localPosition.direction);
+            // print(axis.localPosition.distance);
+            // print(axis.localPosition.distanceSquared);
           },
         ),
         Container(
@@ -113,7 +119,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
                   width: 200,
                   height: 100,
                   // color: Colors.red,
-                  child: Text('+ ${dragPoint.toStringAsFixed(0)}',
+                  child: Text('+ ${ml.round()}',
                       style: Theme.of(context).textTheme.bodyText1),
                 ),
               ),
@@ -132,7 +138,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
                           style: Theme.of(context).textTheme.bodyText1),
                       onPressed: () {
                         cb();
-                        print(dragPoint.toStringAsFixed(0));
+                        print((int.parse(dragPoint.toStringAsFixed(0))*100) );
                       },
                     ),
                   ),
