@@ -15,7 +15,7 @@ class HomeState extends State<HomeRoute> {
   Map user;
   Function cb;
   HomeState(this.user, this.cb);
-  GlobalKey _keyRed = GlobalKey();
+  GlobalKey _key = GlobalKey();
 
   @override
   initState() {
@@ -27,10 +27,26 @@ class HomeState extends State<HomeRoute> {
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
-  _getPositions() {
-    final RenderBox renderBoxRed = _keyRed.currentContext.findRenderObject();
-    final positionRed = renderBoxRed.localToGlobal(Offset.zero);
-    print("POSITION of Red: $positionRed ");
+  dynamic _getPositions() {
+    final RenderBox renderDrop = _key.currentContext.findRenderObject();
+    // final RenderBox renderMilk = _keyMilk.currentContext.findRenderObject();
+    // final RenderBox renderTea = _keyTea.currentContext.findRenderObject();
+    // final RenderBox renderCoffee = _keyCoffee.currentContext.findRenderObject();
+    // final RenderBox renderJuice = _keyJuice.currentContext.findRenderObject();
+    final positionDrop = renderDrop.localToGlobal(Offset.zero);
+    double y = positionDrop.dy;
+    double x = positionDrop.dx;
+    // final positionMilk = renderMilk.localToGlobal(Offset.zero);
+    // final positionTea = renderTea.localToGlobal(Offset.zero);
+    // final positionCoffee = renderCoffee.localToGlobal(Offset.zero);
+    // final positionJuice = renderJuice.localToGlobal(Offset.zero);
+    print("POSITION of renderDrop: $y ");
+    print("POSITION of renderDrop: $x ");
+    return [x, y];
+    // print("POSITION of renderDrop: $positionMilk ");
+    // print("POSITION of renderDrop: $positionTea ");
+    // print("POSITION of renderDrop: $positionCoffee ");
+    // print("POSITION of renderDrop: $positionJuice ");
   }
 
   double btnHeight = 46;
@@ -223,70 +239,19 @@ class HomeState extends State<HomeRoute> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        RawMaterialButton(
-                          constraints:
-                              BoxConstraints.tightFor(width: 50, height: 50),
-                          onPressed: () {
-                            showOvarlay(context);
-                            _getPositions();
-                          },
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: SvgPicture.asset(
-                            'assets/img/drop.svg',
-                          ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                          key: _keyRed,
-                        ),
-                        RawMaterialButton(
-                          constraints:
-                              BoxConstraints.tightFor(width: 50, height: 50),
-                          onPressed: () {},
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: SvgPicture.asset(
-                            'assets/img/milk.svg',
-                          ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        ),
-                        RawMaterialButton(
-                          constraints:
-                              BoxConstraints.tightFor(width: 50, height: 50),
-                          onPressed: () {},
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: SvgPicture.asset(
-                            'assets/img/tea.svg',
-                          ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        ),
-                        RawMaterialButton(
-                          constraints:
-                              BoxConstraints.tightFor(width: 50, height: 50),
-                          onPressed: () {},
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: SvgPicture.asset(
-                            'assets/img/coffee.svg',
-                          ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        ),
-                        RawMaterialButton(
-                          constraints:
-                              BoxConstraints.tightFor(width: 50, height: 50),
-                          onPressed: () {},
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: SvgPicture.asset(
-                            'assets/img/juice.svg',
-                          ),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        ),
+                        Container(
+                            key: _key,
+                            child: btnAddWater(
+                              context,
+                              'assets/img/drop.svg',
+                              _getPositions(),
+                            ),
+                            ),
+                        // btnAddWater(context, 'assets/img/milk.svg', [100, 50]),
+                        // btnAddWater(context, 'assets/img/tea.svg', [200, 50]),
+                        // btnAddWater(
+                        //     context, 'assets/img/coffee.svg', [300, 50]),
+                        // btnAddWater(context, 'assets/img/juice.svg', [400, 50]),
                       ],
                     ),
                   ),
@@ -296,6 +261,23 @@ class HomeState extends State<HomeRoute> {
           ],
         ),
       ),
+    );
+  }
+
+  RawMaterialButton btnAddWater(
+      BuildContext context, String img, dynamic _getPositions) {
+    return RawMaterialButton(
+      constraints: BoxConstraints.tightFor(width: 50, height: 50),
+      onPressed: () {
+        showOvarlay(context, _getPositions);
+      },
+      elevation: 2.0,
+      fillColor: Colors.white,
+      child: SvgPicture.asset(
+        img,
+      ),
+      padding: EdgeInsets.all(15.0),
+      shape: CircleBorder(),
     );
   }
 }

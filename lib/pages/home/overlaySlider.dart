@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 double dragPoint = 0.0;
-showOvarlay(BuildContext context) async {
+showOvarlay(BuildContext context, List pos) async {
+  print(pos);
   Size contextSize = MediaQuery.of(context).size;
   EdgeInsets padding = MediaQuery.of(context).padding;
   Function cb;
@@ -32,8 +33,8 @@ showOvarlay(BuildContext context) async {
         child: Stack(
           children: [
             Positioned(
-              left: 45,
-              bottom: 40,
+              left: pos[0].toDouble(),
+              top: pos[1].toDouble()- contextSize.height / 2,
               child: SliderOverlay(cb: cb, contextSize: contextSize),
             ),
           ],
@@ -45,8 +46,8 @@ showOvarlay(BuildContext context) async {
     overlayEntry.remove();
   };
   overlayState.insert(overlayEntry);
-  await Future.delayed(Duration(seconds: 1000));
-  overlayEntry.remove();
+  // await Future.delayed(Duration(seconds: 1000));
+  // overlayEntry.remove();
 }
 
 class SliderOverlay extends StatefulWidget {
