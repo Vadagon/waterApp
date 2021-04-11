@@ -7,6 +7,7 @@ class HomeRoute extends StatefulWidget {
   HomeRoute({this.user, this.cb});
   final dynamic user;
   final Function cb;
+
   @override
   HomeState createState() => HomeState(user, cb);
 }
@@ -14,39 +15,24 @@ class HomeRoute extends StatefulWidget {
 class HomeState extends State<HomeRoute> {
   Map user;
   Function cb;
-  HomeState(this.user, this.cb);
   GlobalKey _key = GlobalKey();
+  GlobalKey _key1 = GlobalKey();
+  GlobalKey _key2 = GlobalKey();
+  GlobalKey _key3 = GlobalKey();
+  GlobalKey _key4 = GlobalKey();
+
+  HomeState(this.user, this.cb);
+  // GlobalKey _key1 = GlobalKey();
 
   @override
   initState() {
     print(user);
+    //  WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
     // num dailyQuota = waterCalculator(user);
     // print(user['quota']);
 
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
-  }
-
-  dynamic _getPositions() {
-    final RenderBox renderDrop = _key.currentContext.findRenderObject();
-    // final RenderBox renderMilk = _keyMilk.currentContext.findRenderObject();
-    // final RenderBox renderTea = _keyTea.currentContext.findRenderObject();
-    // final RenderBox renderCoffee = _keyCoffee.currentContext.findRenderObject();
-    // final RenderBox renderJuice = _keyJuice.currentContext.findRenderObject();
-    final positionDrop = renderDrop.localToGlobal(Offset.zero);
-    double y = positionDrop.dy;
-    double x = positionDrop.dx;
-    // final positionMilk = renderMilk.localToGlobal(Offset.zero);
-    // final positionTea = renderTea.localToGlobal(Offset.zero);
-    // final positionCoffee = renderCoffee.localToGlobal(Offset.zero);
-    // final positionJuice = renderJuice.localToGlobal(Offset.zero);
-    print("POSITION of renderDrop: $y ");
-    print("POSITION of renderDrop: $x ");
-    return [x, y];
-    // print("POSITION of renderDrop: $positionMilk ");
-    // print("POSITION of renderDrop: $positionTea ");
-    // print("POSITION of renderDrop: $positionCoffee ");
-    // print("POSITION of renderDrop: $positionJuice ");
   }
 
   double btnHeight = 46;
@@ -100,9 +86,7 @@ class HomeState extends State<HomeRoute> {
                           ),
                           tooltip: 'Settings',
                           onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('This is a snackbar')));
+                            Navigator.pushNamed(context, '/setup');
                           },
                         ),
                       ],
@@ -132,7 +116,8 @@ class HomeState extends State<HomeRoute> {
                   ),
                   // HINT
                   //
-
+                  Spacer(),
+                  //  
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
                     child: Row(
@@ -234,19 +219,65 @@ class HomeState extends State<HomeRoute> {
                       ],
                     ),
                   ),
+                  Spacer(),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
+                    margin: EdgeInsets.only(top:45, bottom: 45, left: 45, right: 45),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            key: _key,
-                            child: btnAddWater(
-                              context,
-                              'assets/img/drop.svg',
-                              _getPositions(),
-                            ),
-                            ),
+                          key: _key,
+                          child: btnAddWater(
+                            context,
+                            'assets/img/drop.svg',
+                            _getPositions,
+                            _key,
+                          ),
+                        ),
+                        Container(
+                          key: _key1,
+                          child: btnAddWater(
+                            context,
+                            'assets/img/milk.svg',
+                            _getPositions,
+                            _key1,
+                          ),
+                        ),
+                        Container(
+                          key: _key2,
+                          child: btnAddWater(
+                            context,
+                            'assets/img/tea.svg',
+                            _getPositions,
+                            _key2,
+                          ),
+                        ),
+                        Container(
+                          key: _key3,
+                          child: btnAddWater(
+                            context,
+                            'assets/img/coffee.svg',
+                            _getPositions,
+                            _key3,
+                          ),
+                        ),
+                        Container(
+                          key: _key4,
+                          child: btnAddWater(
+                            context,
+                            'assets/img/juice.svg',
+                            _getPositions,
+                            _key4,
+                          ),
+                        ),
+                        //     Container(
+                        // key: _key1,
+                        // child: btnAddWater(
+                        //   context,
+                        //   'assets/img/milk.svg',
+                        //   _getPositions(_key1),
+                        // ),
+                        // ),
                         // btnAddWater(context, 'assets/img/milk.svg', [100, 50]),
                         // btnAddWater(context, 'assets/img/tea.svg', [200, 50]),
                         // btnAddWater(
@@ -264,12 +295,41 @@ class HomeState extends State<HomeRoute> {
     );
   }
 
+  dynamic _getPositions(keyS) {
+    final RenderBox renderDrop = keyS.currentContext.findRenderObject();
+    // final RenderBox renderMilk = _keyMilk.currentContext.findRenderObject();
+    // final RenderBox renderTea = _keyTea.currentContext.findRenderObject();
+    // final RenderBox renderCoffee = _keyCoffee.currentContext.findRenderObject();
+    // final RenderBox renderJuice = _keyJuice.currentContext.findRenderObject();
+    final positionDrop = renderDrop.localToGlobal(Offset.zero);
+    double y = positionDrop.dy;
+    double x = positionDrop.dx;
+    // final positionMilk = renderMilk.localToGlobal(Offset.zero);
+    // final positionTea = renderTea.localToGlobal(Offset.zero);
+    // final positionCoffee = renderCoffee.localToGlobal(Offset.zero);
+    // final positionJuice = renderJuice.localToGlobal(Offset.zero);
+    print("POSITION of renderDrop: $y ");
+    print("POSITION of renderDrop: $x ");
+    return [x, y];
+    // print("POSITION of renderDrop: $positionMilk ");
+    // print("POSITION of renderDrop: $positionTea ");
+    // print("POSITION of renderDrop: $positionCoffee ");
+    // print("POSITION of renderDrop: $positionJuice ");
+  }
+
+  // _afterLayout(_) {
+  //   _getPositions();
+  // }
   RawMaterialButton btnAddWater(
-      BuildContext context, String img, dynamic _getPositions) {
+    BuildContext context,
+    String img,
+    dynamic _getPositions,
+    Key keyS,
+  ) {
     return RawMaterialButton(
       constraints: BoxConstraints.tightFor(width: 50, height: 50),
       onPressed: () {
-        showOvarlay(context, _getPositions);
+        showOvarlay(context, _getPositions(keyS));
       },
       elevation: 2.0,
       fillColor: Colors.white,

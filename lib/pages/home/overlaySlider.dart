@@ -35,7 +35,7 @@ showOvarlay(BuildContext context, List pos) async {
             Positioned(
               left: pos[0].toDouble(),
               top: pos[1].toDouble()- contextSize.height / 2,
-              child: SliderOverlay(cb: cb, contextSize: contextSize),
+              child: SliderOverlay(cb: cb, contextSize: contextSize,pos:pos),
             ),
           ],
         ),
@@ -55,18 +55,21 @@ class SliderOverlay extends StatefulWidget {
     Key key,
     @required this.contextSize,
     @required this.cb,
+     this.pos,
   }) : super(key: key);
 
   final Function cb;
+  final List pos;
   final Size contextSize;
 
   @override
-  _SliderOverlayState createState() => _SliderOverlayState(cb);
+  _SliderOverlayState createState() => _SliderOverlayState(cb,pos);
 }
 
 class _SliderOverlayState extends State<SliderOverlay> {
-  _SliderOverlayState(this.cb);
+  _SliderOverlayState(this.cb, this.pos);
   final Function cb;
+  final List pos;
   double ml = 1000;
   double btnPos = 0;
   double textPos = 0;
@@ -79,6 +82,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
       child: Container(
           height: widget.contextSize.height / 2,
           child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
             children: [
                 Container(
                             clipBehavior: Clip.antiAlias,
@@ -92,7 +96,8 @@ class _SliderOverlayState extends State<SliderOverlay> {
                     child: Stack(
                       children: [
                         Positioned(
-                          right: 0,
+                          right: pos[1] > 300 ? null : 0,
+                          left:pos[1] < 300 ? null : 0,
                           top: dragPoint,
                           child: Container(
                             color: Color(0xFFFFFFFF),
@@ -101,7 +106,8 @@ class _SliderOverlayState extends State<SliderOverlay> {
                           ),
                         ),
                       ],
-                    ),),
+                    ),
+                    ),
                 
               Container(
                 width: 200,
