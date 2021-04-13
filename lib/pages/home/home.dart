@@ -117,7 +117,7 @@ class HomeState extends State<HomeRoute> {
                   // HINT
                   //
                   Spacer(),
-                  //  
+                  //
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
                     child: Row(
@@ -221,7 +221,8 @@ class HomeState extends State<HomeRoute> {
                   ),
                   Spacer(),
                   Container(
-                    margin: EdgeInsets.only(top:45, bottom: 45, left: 45, right: 45),
+                    margin: EdgeInsets.only(
+                        top: 45, bottom: 45, left: 45, right: 45),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -232,6 +233,8 @@ class HomeState extends State<HomeRoute> {
                             'assets/img/drop.svg',
                             _getPositions,
                             _key,
+                            'Water',
+
                           ),
                         ),
                         Container(
@@ -241,6 +244,7 @@ class HomeState extends State<HomeRoute> {
                             'assets/img/milk.svg',
                             _getPositions,
                             _key1,
+                            'Milk',
                           ),
                         ),
                         Container(
@@ -250,6 +254,8 @@ class HomeState extends State<HomeRoute> {
                             'assets/img/tea.svg',
                             _getPositions,
                             _key2,
+                            'Tea',
+
                           ),
                         ),
                         Container(
@@ -259,6 +265,8 @@ class HomeState extends State<HomeRoute> {
                             'assets/img/coffee.svg',
                             _getPositions,
                             _key3,
+                            'Coffee',
+
                           ),
                         ),
                         Container(
@@ -268,6 +276,8 @@ class HomeState extends State<HomeRoute> {
                             'assets/img/juice.svg',
                             _getPositions,
                             _key4,
+                            'Juice',
+
                           ),
                         ),
                         //     Container(
@@ -295,26 +305,20 @@ class HomeState extends State<HomeRoute> {
     );
   }
 
+  
+  void  _getBarData(ml) {
+    print(ml);
+  }
+
   dynamic _getPositions(keyS) {
     final RenderBox renderDrop = keyS.currentContext.findRenderObject();
-    // final RenderBox renderMilk = _keyMilk.currentContext.findRenderObject();
-    // final RenderBox renderTea = _keyTea.currentContext.findRenderObject();
-    // final RenderBox renderCoffee = _keyCoffee.currentContext.findRenderObject();
-    // final RenderBox renderJuice = _keyJuice.currentContext.findRenderObject();
     final positionDrop = renderDrop.localToGlobal(Offset.zero);
     double y = positionDrop.dy;
     double x = positionDrop.dx;
-    // final positionMilk = renderMilk.localToGlobal(Offset.zero);
-    // final positionTea = renderTea.localToGlobal(Offset.zero);
-    // final positionCoffee = renderCoffee.localToGlobal(Offset.zero);
-    // final positionJuice = renderJuice.localToGlobal(Offset.zero);
     print("POSITION of renderDrop: $y ");
     print("POSITION of renderDrop: $x ");
     return [x, y];
-    // print("POSITION of renderDrop: $positionMilk ");
-    // print("POSITION of renderDrop: $positionTea ");
-    // print("POSITION of renderDrop: $positionCoffee ");
-    // print("POSITION of renderDrop: $positionJuice ");
+    
   }
 
   // _afterLayout(_) {
@@ -325,11 +329,12 @@ class HomeState extends State<HomeRoute> {
     String img,
     dynamic _getPositions,
     Key keyS,
+    String drinkName,
   ) {
     return RawMaterialButton(
       constraints: BoxConstraints.tightFor(width: 50, height: 50),
       onPressed: () {
-        showOvarlay(context, _getPositions(keyS));
+        showOvarlay(context, _getPositions(keyS), _getBarData, drinkName);
       },
       elevation: 2.0,
       fillColor: Colors.white,
