@@ -36,12 +36,16 @@ class HomeState extends State<HomeRoute> {
   }
 
   double btnHeight = 46;
-  var todayDrunked = 400;
+  var todayDrunked = 0;
 
   @override
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
     EdgeInsets padding = MediaQuery.of(context).padding;
+    double avatarBarHeight = contextSize.height / 1.8;
+    double filledStatusBar = (todayDrunked / user['quota']) * 100;
+    double persentFillBar = (avatarBarHeight * filledStatusBar) / 100;
+    print(persentFillBar);
     return Scaffold(
       backgroundColor: Color(0xFF1B61CB),
       body: SafeArea(
@@ -117,21 +121,21 @@ class HomeState extends State<HomeRoute> {
                   // HINT
                   //
                   Spacer(),
-                  //
+                  // BODY
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // AQUARIUM
                         Text(''),
+                        // AQUARIUM
                         Container(
                           child: Column(
                             children: [
                               SvgPicture.asset(
                                 'assets/img/avatar.svg',
-                                height: contextSize.height / 2,
+                                height: avatarBarHeight,
                               ),
                               Text(
                                 '$todayDrunked/${user['quota']}',
@@ -143,74 +147,54 @@ class HomeState extends State<HomeRoute> {
                         ),
                         // WATERBAR
                         Container(
-                          clipBehavior: Clip.antiAlias,
-                          width: 17,
-                          height: contextSize.height / 2,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: const Color(0x40000000),
-                                  offset: Offset(4, 4),
-                                  blurRadius: 4,
-                                  spreadRadius: 0)
-                            ],
-                            color: Color(0xFFFFFFFF),
-                          ),
+                          width: 50,
+                          height: avatarBarHeight,
+                          // color: Colors.red,
                           child: Stack(
                             children: [
                               Positioned(
-                                bottom: 0,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 1,
-                                      width: 17,
-                                      // color: Color(0xFFFFFFFF),
-                                      color: Colors.red,
-                                    ),
-                                    Container(
-                                      height: 200,
-                                      width: 17,
-                                      color: Color(0xA668C4FB),
-                                    ),
-                                  ],
+                                top: avatarBarHeight - 200,
+                                child: Text(
+                                  '18:00',
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ),
                               Positioned(
-                                bottom: 201,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 1,
-                                      width: 17,
-                                      // color: Color(0xFFFFFFFF),
-                                      color: Colors.red,
-                                    ),
-                                    Container(
-                                      height: 20,
-                                      width: 17,
-                                      color: Color(0xA668C4FB),
-                                    ),
-                                  ],
+                                top: avatarBarHeight - 230,
+                                child: Text(
+                                  '18:30',
+                                  style: Theme.of(context).textTheme.bodyText2,
                                 ),
                               ),
                               Positioned(
-                                bottom: 222,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 1,
-                                      width: 17,
-                                      // color: Color(0xFFFFFFFF),
-                                      color: Colors.red,
-                                    ),
-                                    Container(
-                                      height: 20,
-                                      width: 17,
-                                      color: Color(0xA668C4FB),
-                                    ),
-                                  ],
+                                left: 33,
+                                child: Container(
+                                  clipBehavior: Clip.antiAlias,
+                                  width: 17,
+                                  height: avatarBarHeight,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: const Color(0x40000000),
+                                          offset: Offset(2, 2),
+                                          blurRadius: 4,
+                                          spreadRadius: 0)
+                                    ],
+                                    color: Color(0xFFFFFFFF),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                          bottom: 0,
+                                          height: persentFillBar,
+                                          width: 17,
+                                          left: 0,
+                                          child: Container(
+                                            color: Colors.red,
+                                          ))
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -234,7 +218,6 @@ class HomeState extends State<HomeRoute> {
                             _getPositions,
                             _key,
                             'Water',
-
                           ),
                         ),
                         Container(
@@ -255,7 +238,6 @@ class HomeState extends State<HomeRoute> {
                             _getPositions,
                             _key2,
                             'Tea',
-
                           ),
                         ),
                         Container(
@@ -266,7 +248,6 @@ class HomeState extends State<HomeRoute> {
                             _getPositions,
                             _key3,
                             'Coffee',
-
                           ),
                         ),
                         Container(
@@ -277,7 +258,6 @@ class HomeState extends State<HomeRoute> {
                             _getPositions,
                             _key4,
                             'Juice',
-
                           ),
                         ),
                         //     Container(
@@ -305,9 +285,12 @@ class HomeState extends State<HomeRoute> {
     );
   }
 
-  
-  void  _getBarData(ml) {
+  void _getBarData(ml) {
     print(ml);
+    setState(() {
+      todayDrunked += ml;
+    });
+    print(todayDrunked.toString() + ' todayDrunked');
   }
 
   dynamic _getPositions(keyS) {
@@ -318,7 +301,6 @@ class HomeState extends State<HomeRoute> {
     print("POSITION of renderDrop: $y ");
     print("POSITION of renderDrop: $x ");
     return [x, y];
-    
   }
 
   // _afterLayout(_) {
