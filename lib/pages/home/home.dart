@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+// ignore: unused_import
+import 'package:intl/intl.dart';
 import 'overlaySlider.dart';
 
 class HomeRoute extends StatefulWidget {
@@ -27,25 +28,28 @@ class HomeState extends State<HomeRoute> {
   @override
   initState() {
     print(user);
-    //  WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+  
     // num dailyQuota = waterCalculator(user);
     // print(user['quota']);
 
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
+  DateTime now = DateTime.now();
 
   double btnHeight = 46;
   var todayDrunked = 0;
-
+  double persentFillBar;
+  double avatarBarHeight;
   @override
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
     EdgeInsets padding = MediaQuery.of(context).padding;
-    double avatarBarHeight = contextSize.height / 1.8;
+    avatarBarHeight = contextSize.height / 1.8;
     double filledStatusBar = (todayDrunked / user['quota']) * 100;
-    double persentFillBar = (avatarBarHeight * filledStatusBar) / 100;
+    persentFillBar = (avatarBarHeight * filledStatusBar) / 100;
     print(persentFillBar);
+
     return Scaffold(
       backgroundColor: Color(0xFF1B61CB),
       body: SafeArea(
@@ -152,20 +156,7 @@ class HomeState extends State<HomeRoute> {
                           // color: Colors.red,
                           child: Stack(
                             children: [
-                              Positioned(
-                                top: avatarBarHeight - 200,
-                                child: Text(
-                                  '18:00',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ),
-                              Positioned(
-                                top: avatarBarHeight - 230,
-                                child: Text(
-                                  '18:30',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ),
+                              _generateTimeDrinks(context,now ),
                               Positioned(
                                 left: 33,
                                 child: Container(
@@ -186,13 +177,15 @@ class HomeState extends State<HomeRoute> {
                                   child: Stack(
                                     children: [
                                       Positioned(
-                                          bottom: 0,
-                                          height: persentFillBar,
-                                          width: 17,
-                                          left: 0,
-                                          child: Container(
-                                            color: Colors.red,
-                                          ))
+                                        bottom: 0,
+                                        height: persentFillBar,
+                                        width: 17,
+                                        left: 0,
+                                        child: Container(
+                                          color: Color(0xA668C4FB),
+                                          child: _generateDrinks(),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -260,19 +253,6 @@ class HomeState extends State<HomeRoute> {
                             'Juice',
                           ),
                         ),
-                        //     Container(
-                        // key: _key1,
-                        // child: btnAddWater(
-                        //   context,
-                        //   'assets/img/milk.svg',
-                        //   _getPositions(_key1),
-                        // ),
-                        // ),
-                        // btnAddWater(context, 'assets/img/milk.svg', [100, 50]),
-                        // btnAddWater(context, 'assets/img/tea.svg', [200, 50]),
-                        // btnAddWater(
-                        //     context, 'assets/img/coffee.svg', [300, 50]),
-                        // btnAddWater(context, 'assets/img/juice.svg', [400, 50]),
                       ],
                     ),
                   ),
@@ -285,12 +265,15 @@ class HomeState extends State<HomeRoute> {
     );
   }
 
+  List pointsBar = [0];
   void _getBarData(ml) {
     print(ml);
     setState(() {
       todayDrunked += ml;
+      pointsBar.add(todayDrunked);
     });
-    print(todayDrunked.toString() + ' todayDrunked');
+
+    print(pointsBar);
   }
 
   dynamic _getPositions(keyS) {
@@ -327,4 +310,49 @@ class HomeState extends State<HomeRoute> {
       shape: CircleBorder(),
     );
   }
+
+  _generateDrinks() {
+    print(pointsBar);
+    return new Stack(
+      children: [
+        for (var item in pointsBar)
+         new Positioned(
+            bottom:
+                (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
+                    100,
+            child: item==0?Text(''):Container(
+              width: 17,
+              height: 2,
+              color: Colors.white,
+            ),
+          ),
+      ],
+    );
+  }
+  _generateTimeDrinks(context, time) {
+  String formattedDate = now.second.toString();
+  // DateFormat.Hm().format(now) + ":" + 
+  List timeArr = [now];
+  timeArr.add(time);
+  print(timeArr);
+  int index = 0;
+  return new Stack(
+    children: [
+        for (var item in pointsBar) 
+         Positioned(
+         bottom:
+                (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
+                    100,
+        child: Text(
+          item==0?'': '18:00',
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                color: Colors.white, 
+                fontWeight: FontWeight.bold),
+        ),
+      ),
+    ],
+  );
 }
+}
+
+
