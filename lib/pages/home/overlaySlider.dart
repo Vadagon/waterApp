@@ -13,6 +13,8 @@ showOvarlay(
       top: 0,
       left: 0,
       child: Container(
+        clipBehavior:  Clip.none,
+
         width: contextSize.width,
         // color: Colors.green,
         padding: EdgeInsets.only(top: padding.top),
@@ -44,7 +46,9 @@ showOvarlay(
               width: contextSize.width,
               child: Center(
                   child: Container(
-                    padding: EdgeInsets.only(top: 20,),
+                      padding: EdgeInsets.only(
+                        top: 20,
+                      ),
                       child: Text(drinkName,
                           style: Theme.of(context).textTheme.headline1))),
             ),
@@ -53,9 +57,9 @@ showOvarlay(
       ),
     ),
   );
-  cb = (ddd) {
-    // print(ddd);
-    cb2(ddd);
+  cb = (ml) {
+    // print(ml);
+    cb2(ml);
     overlayEntry.remove();
   };
   overlayState.insert(overlayEntry);
@@ -87,24 +91,32 @@ class _SliderOverlayState extends State<SliderOverlay> {
   double btnPos = 0;
   double textPos = 0;
   double dragPoint = 0;
+  double pointPos = 0;
 
   @override
   Widget build(BuildContext context) {
     bool adapt = (pos[0] > (widget.contextSize.width / 2));
     return GestureDetector(
       child: Container(
-        width: 200,
+        width: 206,
         // color: Colors.red,
-        height: widget.contextSize.height / 2,
+        height: widget.contextSize.height / 2  ,
         child: Stack(
           children: [
             Positioned(
               width: 50,
-              height: widget.contextSize.height / 2,
+              height: widget.contextSize.height / 2 - 6,
               left: adapt ? 150 : 0,
               child: Container(
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
+                  boxShadow: [
+                        BoxShadow(
+                            color: const Color(0x40000000),
+                            offset: Offset(2, 2),
+                            blurRadius: 2,
+                            spreadRadius: 0)
+                      ],
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   color: Color(0xFF9DEDFF),
                 ),
@@ -114,7 +126,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
                     Positioned(
                       right: adapt ? null : 0,
                       left: !adapt ? null : 0,
-                      top: dragPoint,
+                      top: dragPoint - pointPos,
                       child: Container(
                         color: Color(0xFFFFFFFF),
                         width: 20,
@@ -126,13 +138,18 @@ class _SliderOverlayState extends State<SliderOverlay> {
               ),
             ),
             Positioned(
-              left: adapt ? 0 : 50,
+              left: adapt ? 30 : 50,
               child: Container(
                 // color:Colors.red,
-                width: 200,
+                width: 120,
                 height: widget.contextSize.height / 2 + 20,
                 child: Stack(
                   children: [
+                    Positioned(
+                       top: dragPoint - textPos-100,
+                      left: 10,
+                      child: Text('asd',style: Theme.of(context).textTheme.bodyText1),
+                      ),
                     Positioned(
                       top: dragPoint - textPos,
                       left: 10,
@@ -145,11 +162,18 @@ class _SliderOverlayState extends State<SliderOverlay> {
                       ),
                     ),
                     Positioned(
-                      top: dragPoint + 40 - btnPos,
+                      top: dragPoint + 40 - btnPos - 6,
                       left: 10,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color(0x40000000),
+                                offset: Offset(2, 2),
+                                blurRadius: 2,
+                                spreadRadius: 0)
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
                           color: Color(0xFF27C1E2),
                         ),
                         width: 80,
@@ -185,10 +209,12 @@ class _SliderOverlayState extends State<SliderOverlay> {
             ml = 1000;
           }
           if (ml < 200) {
+            pointPos = 8;
             textPos = 80;
             btnPos = 80;
           } else {
             textPos = 0;
+            pointPos = 0;
             btnPos = 0;
           }
           if (dragPoint > maxHeight) {

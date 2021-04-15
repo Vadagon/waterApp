@@ -41,6 +41,8 @@ class HomeState extends State<HomeRoute> {
   var todayDrunked = 0;
   double persentFillBar;
   double avatarBarHeight;
+  var drinkHistory;
+
   @override
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
@@ -48,9 +50,9 @@ class HomeState extends State<HomeRoute> {
     avatarBarHeight = contextSize.height / 1.8 - padding.bottom - padding.top;
     double filledStatusBar = (todayDrunked / user['quota']) * 100;
     persentFillBar = (avatarBarHeight * filledStatusBar) / 100;
-    print(persentFillBar);
-    var drinkHistory = {250: 200, 560: 300, 700: 100};
-    print(drinkHistory);
+    drinkHistory = {250: 100, 560: 300, 700: 140};
+    double heightWithoutBody = (contextSize.height - padding.bottom - padding.top - avatarBarHeight )/2;
+    print(heightWithoutBody);
     // 250, 560, 700 в масиві це хвилини а 200, 300, 100 це мілілітри
     // TODO: display drinkHistory in the Right Side Bar
 
@@ -84,57 +86,66 @@ class HomeState extends State<HomeRoute> {
               child: Column(
                 children: [
                   Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    height:heightWithoutBody,
+                    // color:Colors.red,
+                    child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(10),
-                          child: SvgPicture.asset(
-                            'assets/img/bulb.svg',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                child: SvgPicture.asset(
+                                  'assets/img/bulb.svg',
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.settings,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                                tooltip: 'Settings',
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/setup');
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                            size: 28,
+                        // APP BAR ICONS
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
+                          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: const Color(0x40000000),
+                                  offset: Offset(4, 4),
+                                  blurRadius: 4,
+                                  spreadRadius: 0)
+                            ],
+                            color: Color(0xA668C4FB),
                           ),
-                          tooltip: 'Settings',
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/setup');
-                          },
+                          width: double.infinity,
+                          child: Text(
+                            'Коли організм зневоднений, обмін речовин сповільнюється. Порушення метаболізму може привести до набору ваги.',
+                            style: Theme.of(context).textTheme.bodyText2,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                  // APP BAR ICONS
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                            color: const Color(0x40000000),
-                            offset: Offset(4, 4),
-                            blurRadius: 4,
-                            spreadRadius: 0)
-                      ],
-                      color: Color(0xA668C4FB),
-                    ),
-                    width: double.infinity,
-                    child: Text(
-                      'Коли організм зневоднений, обмін речовин сповільнюється. Порушення метаболізму може привести до набору ваги.',
-                      style: Theme.of(context).textTheme.bodyText2,
-                      textAlign: TextAlign.center,
                     ),
                   ),
                   // HINT
-                  //
-                  Spacer(),
+
                   // BODY
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
+                    // color:Colors.green,
+                    height:avatarBarHeight,
+                    padding: EdgeInsets.symmetric( horizontal: 45),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,7 +157,8 @@ class HomeState extends State<HomeRoute> {
                             children: [
                               SvgPicture.asset(
                                 'assets/img/avatar.svg',
-                                height: avatarBarHeight,
+
+                                height: avatarBarHeight - 25,
                               ),
                               Text(
                                 '$todayDrunked/${user['quota']}',
@@ -203,9 +215,11 @@ class HomeState extends State<HomeRoute> {
                       ],
                     ),
                   ),
-                  Spacer(),
                   Container(
-                    margin: EdgeInsets.only(
+                    height:heightWithoutBody,
+                    // color:Colors.red,
+
+                    padding: EdgeInsets.only(
                         top: 45, bottom: 45, left: 45, right: 45),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -318,25 +332,42 @@ class HomeState extends State<HomeRoute> {
     );
   }
 
-  _generateDrinks() {
-    print(pointsBar);
-    return new Stack(
-      children: [
-        for (var item in pointsBar)
-          new Positioned(
-            bottom:
-                (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
-                    100,
-            child: item == 0
-                ? Text('')
-                : Container(
-                    width: 17,
-                    height: 2,
-                    color: Colors.white,
-                  ),
-          ),
-      ],
-    );
+  Widget _generateDrinks() {
+    List<Widget> list = new List<Widget>();
+    drinkHistory.forEach((k, v) {
+      v+=v;
+      print(v);
+      list.add(
+         Positioned(
+          bottom:
+              (avatarBarHeight * ((v.toDouble() / user['quota']) * 100)) / 100,
+          child: v == 0
+              ? Text('')
+              : Container(
+                  width: 17,
+                  height: 2,
+                  color: Colors.white,
+                ),
+        ),
+      );
+    });
+
+    return new Stack(children: list);
+    //
+    //   // print('${k}: ${v}');
+    //     new Positioned(
+    //       bottom:
+    //           (avatarBarHeight * ((v.toDouble() / user['quota']) * 100)) /
+    //               100,
+    //       child: v == 0
+    //           ? Text('')
+    //           : Container(
+    //               width: 17,
+    //               height: 2,
+    //               color: Colors.white,
+    //             ),
+    //             ),
+    //     ).toList(),
   }
 
   _generateTimeDrinks(context, time) {
