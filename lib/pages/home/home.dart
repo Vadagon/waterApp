@@ -28,13 +28,13 @@ class HomeState extends State<HomeRoute> {
   @override
   initState() {
     print(user);
-  
+
     // num dailyQuota = waterCalculator(user);
     // print(user['quota']);
-
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
+
   DateTime now = DateTime.now();
 
   double btnHeight = 46;
@@ -45,10 +45,14 @@ class HomeState extends State<HomeRoute> {
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
     EdgeInsets padding = MediaQuery.of(context).padding;
-    avatarBarHeight = contextSize.height / 1.8;
+    avatarBarHeight = contextSize.height / 1.8 - padding.bottom - padding.top;
     double filledStatusBar = (todayDrunked / user['quota']) * 100;
     persentFillBar = (avatarBarHeight * filledStatusBar) / 100;
     print(persentFillBar);
+    var drinkHistory = {250: 200, 560: 300, 700: 100};
+    print(drinkHistory);
+    // 250, 560, 700 в масиві це хвилини а 200, 300, 100 це мілілітри
+    // TODO: display drinkHistory in the Right Side Bar
 
     return Scaffold(
       backgroundColor: Color(0xFF1B61CB),
@@ -57,7 +61,10 @@ class HomeState extends State<HomeRoute> {
           children: [
             Container(
               width: contextSize.width,
-              height: contextSize.height - padding.top - padding.bottom,
+              // забрав ту пусту риску знизу телефона
+              // TODO: need to fix bottom overflow without changing height below
+              height: contextSize.height - padding.top,
+              padding: EdgeInsets.only(bottom: padding.bottom),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomRight,
@@ -156,7 +163,7 @@ class HomeState extends State<HomeRoute> {
                           // color: Colors.red,
                           child: Stack(
                             children: [
-                              _generateTimeDrinks(context,now ),
+                              _generateTimeDrinks(context, now),
                               Positioned(
                                 left: 33,
                                 child: Container(
@@ -316,43 +323,48 @@ class HomeState extends State<HomeRoute> {
     return new Stack(
       children: [
         for (var item in pointsBar)
-         new Positioned(
+          new Positioned(
             bottom:
                 (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
                     100,
-            child: item==0?Text(''):Container(
-              width: 17,
-              height: 2,
-              color: Colors.white,
+            child: item == 0
+                ? Text('')
+                : Container(
+                    width: 17,
+                    height: 2,
+                    color: Colors.white,
+                  ),
+          ),
+      ],
+    );
+  }
+
+  _generateTimeDrinks(context, time) {
+    print('time');
+    print(time);
+    // час
+    print('${time.hour}: ${time.minute}');
+    String formattedDate = now.second.toString();
+    List timeArr = [now];
+    timeArr.add(time);
+    print(timeArr);
+    int index = 0;
+    return new Stack(
+      children: [
+        for (var item in pointsBar)
+          Positioned(
+            bottom:
+                (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
+                    100,
+            child: Text(
+              item == 0 ? '' : '18:00',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
       ],
     );
   }
-  _generateTimeDrinks(context, time) {
-  String formattedDate = now.second.toString();
-  // DateFormat.Hm().format(now) + ":" + 
-  List timeArr = [now];
-  timeArr.add(time);
-  print(timeArr);
-  int index = 0;
-  return new Stack(
-    children: [
-        for (var item in pointsBar) 
-         Positioned(
-         bottom:
-                (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
-                    100,
-        child: Text(
-          item==0?'': '18:00',
-          style: Theme.of(context).textTheme.bodyText2.copyWith(
-                color: Colors.white, 
-                fontWeight: FontWeight.bold),
-        ),
-      ),
-    ],
-  );
 }
-}
-
-
