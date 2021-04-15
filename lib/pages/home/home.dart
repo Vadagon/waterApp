@@ -35,24 +35,22 @@ class HomeState extends State<HomeRoute> {
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
-  DateTime now = DateTime.now();
 
   double btnHeight = 46;
   var todayDrunked = 0;
   double persentFillBar;
   double avatarBarHeight;
-  var drinkHistory;
+   var drinkHistory = {250: 100, 560: 300, 700: 140};
 
   @override
   Widget build(BuildContext context) {
+
     Size contextSize = MediaQuery.of(context).size;
     EdgeInsets padding = MediaQuery.of(context).padding;
     avatarBarHeight = contextSize.height / 1.8 - padding.bottom - padding.top;
     double filledStatusBar = (todayDrunked / user['quota']) * 100;
     persentFillBar = (avatarBarHeight * filledStatusBar) / 100;
-    drinkHistory = {250: 100, 560: 300, 700: 140};
     double heightWithoutBody = (contextSize.height - padding.bottom - padding.top - avatarBarHeight )/2;
-    print(heightWithoutBody);
     // 250, 560, 700 в масиві це хвилини а 200, 300, 100 це мілілітри
     // TODO: display drinkHistory in the Right Side Bar
 
@@ -61,6 +59,7 @@ class HomeState extends State<HomeRoute> {
       body: SafeArea(
         child: Column(
           children: [
+              // BG GRADIENT AND SIZE WINDOW
             Container(
               width: contextSize.width,
               // забрав ту пусту риску знизу телефона
@@ -81,10 +80,9 @@ class HomeState extends State<HomeRoute> {
                   ],
                 ),
               ),
-              // BG GRADIENT AND SIZE WINDOW
-
               child: Column(
                 children: [
+                  // HINT
                   Container(
                     height:heightWithoutBody,
                     // color:Colors.red,
@@ -139,8 +137,6 @@ class HomeState extends State<HomeRoute> {
                       ],
                     ),
                   ),
-                  // HINT
-
                   // BODY
                   Container(
                     // color:Colors.green,
@@ -175,7 +171,9 @@ class HomeState extends State<HomeRoute> {
                           // color: Colors.red,
                           child: Stack(
                             children: [
-                              _generateTimeDrinks(context, now),
+                              // _generateTimeDrinks(context, now),
+                              Text('asd'),
+                              // 
                               Positioned(
                                 left: 33,
                                 child: Container(
@@ -215,6 +213,7 @@ class HomeState extends State<HomeRoute> {
                       ],
                     ),
                   ),
+                  // Bottom buttons
                   Container(
                     height:heightWithoutBody,
                     // color:Colors.red,
@@ -286,53 +285,18 @@ class HomeState extends State<HomeRoute> {
     );
   }
 
-  List pointsBar = [0];
   void _getBarData(ml) {
-    print(ml);
+  DateTime now = DateTime.now();
+  var dayStartTime = ((now.hour/60) + now.minute).round();
     setState(() {
       todayDrunked += ml;
-      pointsBar.add(todayDrunked);
+      drinkHistory.addAll({dayStartTime:ml});
+      print(drinkHistory);
+      // ADD TIME AND ML TO HISTORI
     });
 
-    print(pointsBar);
   }
-
-  dynamic _getPositions(keyS) {
-    final RenderBox renderDrop = keyS.currentContext.findRenderObject();
-    final positionDrop = renderDrop.localToGlobal(Offset.zero);
-    double y = positionDrop.dy;
-    double x = positionDrop.dx;
-    print("POSITION of renderDrop: $y ");
-    print("POSITION of renderDrop: $x ");
-    return [x, y];
-  }
-
-  // _afterLayout(_) {
-  //   _getPositions();
-  // }
-  RawMaterialButton btnAddWater(
-    BuildContext context,
-    String img,
-    dynamic _getPositions,
-    Key keyS,
-    String drinkName,
-  ) {
-    return RawMaterialButton(
-      constraints: BoxConstraints.tightFor(width: 50, height: 50),
-      onPressed: () {
-        showOvarlay(context, _getPositions(keyS), _getBarData, drinkName);
-      },
-      elevation: 2.0,
-      fillColor: Colors.white,
-      child: SvgPicture.asset(
-        img,
-      ),
-      padding: EdgeInsets.all(15.0),
-      shape: CircleBorder(),
-    );
-  }
-
-  Widget _generateDrinks() {
+ Widget _generateDrinks() {
     List<Widget> list = new List<Widget>();
     drinkHistory.forEach((k, v) {
       v+=v;
@@ -369,33 +333,69 @@ class HomeState extends State<HomeRoute> {
     //             ),
     //     ).toList(),
   }
+  dynamic _getPositions(keyS) {
+    final RenderBox renderDrop = keyS.currentContext.findRenderObject();
+    final positionDrop = renderDrop.localToGlobal(Offset.zero);
+    double y = positionDrop.dy;
+    double x = positionDrop.dx;
+    // print("POSITION of renderDrop: $y ");
+    // print("POSITION of renderDrop: $x ");
+    return [x, y];
+  }
 
-  _generateTimeDrinks(context, time) {
-    print('time');
-    print(time);
-    // час
-    print('${time.hour}: ${time.minute}');
-    String formattedDate = now.second.toString();
-    List timeArr = [now];
-    timeArr.add(time);
-    print(timeArr);
-    int index = 0;
-    return new Stack(
-      children: [
-        for (var item in pointsBar)
-          Positioned(
-            bottom:
-                (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
-                    100,
-            child: Text(
-              item == 0 ? '' : '18:00',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-      ],
+  // _afterLayout(_) {
+  //   _getPositions();
+  // }
+  RawMaterialButton btnAddWater(
+    BuildContext context,
+    String img,
+    dynamic _getPositions,
+    Key keyS,
+    String drinkName,
+  ) {
+    return RawMaterialButton(
+      constraints: BoxConstraints.tightFor(width: 50, height: 50),
+      onPressed: () {
+        showOvarlay(context, _getPositions(keyS), _getBarData, drinkName);
+      },
+      elevation: 2.0,
+      fillColor: Colors.white,
+      child: SvgPicture.asset(
+        img,
+      ),
+      padding: EdgeInsets.all(15.0),
+      shape: CircleBorder(),
     );
   }
+
+ 
+
+  // _generateTimeDrinks(context, time) {
+  //   print('time');
+  //   print(time);
+  //   // час
+  //   print('${time.hour}: ${time.minute}');
+  //   String formattedDate = now.second.toString();
+  //   List timeArr = [now];
+  //   timeArr.add(time);
+  //   print(timeArr);
+  //   int index = 0;
+  //   return new Stack(
+  //     children: [
+  //       for (var item in pointsBar)
+  //         Positioned(
+  //           bottom:
+  //               (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
+  //                   100,
+  //           child: Text(
+  //             item == 0 ? '' : '18:00',
+  //             style: Theme.of(context)
+  //                 .textTheme
+  //                 .bodyText2
+  //                 .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+  //           ),
+  //         ),
+  //     ],
+  //   );
+  // }
 }

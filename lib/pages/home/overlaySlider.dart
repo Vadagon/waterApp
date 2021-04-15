@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 double dragPoint = 0.0;
 showOvarlay(
     BuildContext context, List pos, Function cb2, String drinkName) async {
-  print(pos);
+  // print(pos);
   Size contextSize = MediaQuery.of(context).size;
   EdgeInsets padding = MediaQuery.of(context).padding;
   Function cb;
@@ -227,7 +227,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
           } else {
             //  dragPoint =  ((((dragPoint/10).floor())*10)).toDouble();
           }
-          print(dragPoint);
+          // print(dragPoint);
           // print(ml);
         });
 
