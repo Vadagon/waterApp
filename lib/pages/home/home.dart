@@ -39,7 +39,7 @@ class HomeState extends State<HomeRoute> {
   var todayDrunked = 0;
   double persentFillBar;
   double avatarBarHeight;
-  var drinkHistory = {250: 100, 560: 300, 700: 140};
+  var drinkHistory = {};
 
   @override
   Widget build(BuildContext context) {
@@ -280,25 +280,33 @@ class HomeState extends State<HomeRoute> {
 
   void _getBarData(ml) {
     DateTime now = DateTime.now();
-    var dayStartTime = ((now.hour / 60) + now.minute).round();
+    var dayStartTime = ((((now.hour * 60) + (now.minute))*60)+now.second).round();
     setState(() {
       todayDrunked += ml;
       drinkHistory.addAll({dayStartTime: ml});
-      print(drinkHistory);
       // ADD TIME AND ML TO HISTORI
     });
   }
 
   Widget _generateDrinks() {
-    List<Widget> list = new List<Widget>();
+    // GENERATE LIST OF POINTS POSITION VALUE
+    List persentPointOnBarArray = []; 
+    var a = 0;
     drinkHistory.forEach((k, v) {
-      v += v;
-      print(v);
+    a+=v; 
+    var persentPointOnBar = (a / user['quota']) * 100;
+    persentPointOnBarArray.add(persentPointOnBar);
+    }
+    );
+
+    // GENERATE LIST OF WIDGETS
+    List<Widget> list = new List<Widget>();
+    persentPointOnBarArray.forEach((val) {
+      // print(v);
       list.add(
         Positioned(
-          bottom:
-              (avatarBarHeight * ((v.toDouble() / user['quota']) * 100)) / 100,
-          child: v == 0
+          bottom: (avatarBarHeight * (val) / 100),
+          child: val == 0
               ? Text('')
               : Container(
                   width: 17,
