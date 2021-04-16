@@ -52,7 +52,7 @@ class HomeState extends State<HomeRoute> {
         (contextSize.height - padding.bottom - padding.top - avatarBarHeight) /
             2;
     // 250, 560, 700 в масиві це хвилини а 200, 300, 100 це мілілітри
-    // TODO: display drinkHistory in the Right Side Bar
+    // DONE: display drinkHistory in the Right Side Bar
 
     return Scaffold(
       backgroundColor: Color(0xFF1B61CB),
@@ -108,10 +108,10 @@ class HomeState extends State<HomeRoute> {
                     ),
                     // APP BAR ICONS
                     Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 45),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 5),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 45),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
@@ -147,9 +147,12 @@ class HomeState extends State<HomeRoute> {
                     Container(
                       child: Column(
                         children: [
-                          SvgPicture.asset(
-                            'assets/img/avatar.svg',
+                          Container(
                             height: avatarBarHeight - 25,
+                            child: SvgPicture.asset(
+                              'assets/img/avatar.svg',
+                            ),
+                   
                           ),
                           Text(
                             '$todayDrunked/${user['quota']}',
@@ -166,9 +169,9 @@ class HomeState extends State<HomeRoute> {
                       // color: Colors.red,
                       child: Stack(
                         children: [
-                          // _generateTimeDrinks(context, now),
-                          Text('asd'),
-                          //
+                          // TEXT
+                          _generateDrinks(false),
+                          // BAR
                           Positioned(
                             left: 33,
                             child: Container(
@@ -195,7 +198,7 @@ class HomeState extends State<HomeRoute> {
                                     left: 0,
                                     child: Container(
                                       color: Color(0xA668C4FB),
-                                      child: _generateDrinks(),
+                                      child: _generateDrinks(true),
                                     ),
                                   ),
                                 ],
@@ -213,8 +216,8 @@ class HomeState extends State<HomeRoute> {
                 height: heightWithoutBody,
                 // color:Colors.red,
 
-                padding: EdgeInsets.only(
-                    top: 45, bottom: 45, left: 45, right: 45),
+                padding:
+                    EdgeInsets.only(top: 45, bottom: 45, left: 45, right: 45),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -280,7 +283,8 @@ class HomeState extends State<HomeRoute> {
 
   void _getBarData(ml) {
     DateTime now = DateTime.now();
-    var dayStartTime = ((((now.hour * 60) + (now.minute))*60)+now.second).round();
+    var dayStartTime =
+        ((((now.hour * 60) + (now.minute)) * 60) + now.second).round();
     setState(() {
       todayDrunked += ml;
       drinkHistory.addAll({dayStartTime: ml});
@@ -288,51 +292,48 @@ class HomeState extends State<HomeRoute> {
     });
   }
 
-  Widget _generateDrinks() {
+  String _printDuration(
+    Duration duration,
+  ) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes";
+  }
+
+  Widget _generateDrinks(bool type) {
     // GENERATE LIST OF POINTS POSITION VALUE
-    List persentPointOnBarArray = []; 
+    dynamic persentPointOnBarArray = {};
     var a = 0;
     drinkHistory.forEach((k, v) {
-    a+=v; 
-    var persentPointOnBar = (a / user['quota']) * 100;
-    persentPointOnBarArray.add(persentPointOnBar);
-    }
-    );
+      String timeBarText = (_printDuration(Duration(seconds: k)));
 
+      a += v;
+      var persentPointOnBar = (a / user['quota']) * 100;
+      persentPointOnBarArray.addAll({persentPointOnBar: timeBarText});
+    });
     // GENERATE LIST OF WIDGETS
-    List<Widget> list = new List<Widget>();
-    persentPointOnBarArray.forEach((val) {
-      // print(v);
+    List<Widget> list = [];
+    persentPointOnBarArray.forEach((k, v) {
+      var posPoint = (avatarBarHeight * (k) / 100);
       list.add(
         Positioned(
-          bottom: (avatarBarHeight * (val) / 100),
-          child: val == 0
-              ? Text('')
-              : Container(
+          bottom: posPoint,
+          child: type
+              ? Container(
                   width: 17,
                   height: 2,
                   color: Colors.white,
+                )
+              : Text(
+                  v,
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
         ),
       );
     });
 
     return new Stack(children: list);
-    //
-    //   // print('${k}: ${v}');
-    //     new Positioned(
-    //       bottom:
-    //           (avatarBarHeight * ((v.toDouble() / user['quota']) * 100)) /
-    //               100,
-    //       child: v == 0
-    //           ? Text('')
-    //           : Container(
-    //               width: 17,
-    //               height: 2,
-    //               color: Colors.white,
-    //             ),
-    //             ),
-    //     ).toList(),
   }
 
   dynamic _getPositions(keyS) {
@@ -345,9 +346,6 @@ class HomeState extends State<HomeRoute> {
     return [x, y];
   }
 
-  // _afterLayout(_) {
-  //   _getPositions();
-  // }
   RawMaterialButton btnAddWater(
     BuildContext context,
     String img,
@@ -369,33 +367,4 @@ class HomeState extends State<HomeRoute> {
       shape: CircleBorder(),
     );
   }
-
-  // _generateTimeDrinks(context, time) {
-  //   print('time');
-  //   print(time);
-  //   // час
-  //   print('${time.hour}: ${time.minute}');
-  //   String formattedDate = now.second.toString();
-  //   List timeArr = [now];
-  //   timeArr.add(time);
-  //   print(timeArr);
-  //   int index = 0;
-  //   return new Stack(
-  //     children: [
-  //       for (var item in pointsBar)
-  //         Positioned(
-  //           bottom:
-  //               (avatarBarHeight * ((item.toDouble() / user['quota']) * 100)) /
-  //                   100,
-  //           child: Text(
-  //             item == 0 ? '' : '18:00',
-  //             style: Theme.of(context)
-  //                 .textTheme
-  //                 .bodyText2
-  //                 .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //     ],
-  //   );
-  // }
 }

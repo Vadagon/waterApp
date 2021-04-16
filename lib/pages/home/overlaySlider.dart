@@ -145,11 +145,12 @@ class _SliderOverlayState extends State<SliderOverlay> {
                 height: widget.contextSize.height / 2 + 20,
                 child: Stack(
                   children: [
-                    Positioned(
-                       top: dragPoint - textPos-100,
-                      left: 10,
-                      child: Text('asd',style: Theme.of(context).textTheme.bodyText1),
-                      ),
+                    // TODO: NEED ADD ICONS FOR 100ml, 250, 500...
+                    // Positioned(
+                    //    top: dragPoint - textPos-100,
+                    //   left: 10,
+                    //   child: Text('asd',style: Theme.of(context).textTheme.bodyText1),
+                    //   ),
                     Positioned(
                       top: dragPoint - textPos,
                       left: 10,
