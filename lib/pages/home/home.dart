@@ -40,7 +40,7 @@ class HomeState extends State<HomeRoute> {
   double persentFillBar;
   double avatarBarHeight;
   var drinkHistory = {};
-
+  var persentPointOnBar;
   @override
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
@@ -143,16 +143,28 @@ class HomeState extends State<HomeRoute> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(''),
-                    // AQUARIUM
+                    // AVATAR
                     Container(
                       child: Column(
                         children: [
-                          Container(
-                            height: avatarBarHeight - 25,
+                          ShaderMask(
+                            shaderCallback: (bounds) => LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              stops: [
+                                persentPointOnBar!=null?persentPointOnBar/100:0,
+                                persentPointOnBar!=null?persentPointOnBar/100:0,
+                              ],
+                              colors: [
+                                Color(0xffffffff),
+                                Color(0xff42D8F9),
+                              ],
+                              tileMode: TileMode.clamp,
+                            ).createShader(bounds),
                             child: SvgPicture.asset(
                               'assets/img/avatar.svg',
+                              height: avatarBarHeight-25,
                             ),
-                   
                           ),
                           Text(
                             '$todayDrunked/${user['quota']}',
@@ -308,7 +320,7 @@ class HomeState extends State<HomeRoute> {
       String timeBarText = (_printDuration(Duration(seconds: k)));
 
       a += v;
-      var persentPointOnBar = (a / user['quota']) * 100;
+       persentPointOnBar = (a / user['quota']) * 100;
       persentPointOnBarArray.addAll({persentPointOnBar: timeBarText});
     });
     // GENERATE LIST OF WIDGETS
