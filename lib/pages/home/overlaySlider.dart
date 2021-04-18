@@ -6,6 +6,7 @@ showOvarlay(
   Size contextSize = MediaQuery.of(context).size;
   EdgeInsets padding = MediaQuery.of(context).padding;
   Function cb;
+  Function close;
   OverlayState overlayState = Overlay.of(context);
   OverlayEntry overlayEntry = OverlayEntry(
     builder: (context) => Positioned(
@@ -35,9 +36,16 @@ showOvarlay(
         ),
         child: Stack(
           children: [
-            Icon(
-              Icons.cancel,
-              color: Colors.white,
+            Positioned(
+              top: 20,
+              right: 20,
+              child: Container(
+
+                child: GestureDetector(
+                  child: const Icon(Icons.cancel,color: Colors.white,),
+                  onTap: (){ close();} 
+                ),
+              ),
             ),
             Positioned(
               left: pos[0] > contextSize.width / 2
@@ -62,43 +70,16 @@ showOvarlay(
     ),
   );
   cb = (ml) {
-    // print(ml);
     cb2(ml);
+    overlayEntry.remove();
+  };
+  close = () {
     overlayEntry.remove();
   };
   overlayState.insert(overlayEntry);
   // await Future.delayed(Duration(seconds: 1000));
   // overlayEntry.remove();
 }
-
-// class Close extends StatefulWidget {
-//   Close(Function cb);
-
-//   @override
-//   _CloseState createState() => _CloseState();
-// }
-
-// class _CloseState extends State<Close> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Positioned(
-//       width: 50,
-//       top: 0.0,
-//       right: 0.0,
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: InkWell(
-//           child: Container(
-//             child: Icon(
-//               Icons.cancel,
-//               color: Colors.white,
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class SliderOverlay extends StatefulWidget {
   const SliderOverlay({
