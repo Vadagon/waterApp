@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-double dragPoint = 0.0;
 showOvarlay(
     BuildContext context, List pos, Function cb2, String drinkName) async {
   // print(pos);
@@ -28,13 +27,18 @@ showOvarlay(
               0.8,
             ],
             colors: [
-              Color(0xff00D7CA),
-              Color(0xcff1B61CB),
+              Color(0xE600D7CA),
+              Color(0xcE61B61CB),
             ],
+            // color:Colors.transparent,
           ),
         ),
         child: Stack(
           children: [
+            Icon(
+              Icons.cancel,
+              color: Colors.white,
+            ),
             Positioned(
               left: pos[0] > contextSize.width / 2
                   ? pos[0].toDouble() - 150
@@ -67,6 +71,35 @@ showOvarlay(
   // overlayEntry.remove();
 }
 
+// class Close extends StatefulWidget {
+//   Close(Function cb);
+
+//   @override
+//   _CloseState createState() => _CloseState();
+// }
+
+// class _CloseState extends State<Close> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Positioned(
+//       width: 50,
+//       top: 0.0,
+//       right: 0.0,
+//       child: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: InkWell(
+//           child: Container(
+//             child: Icon(
+//               Icons.cancel,
+//               color: Colors.white,
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class SliderOverlay extends StatefulWidget {
   const SliderOverlay({
     Key key,
@@ -80,18 +113,29 @@ class SliderOverlay extends StatefulWidget {
   final Size contextSize;
 
   @override
-  _SliderOverlayState createState() => _SliderOverlayState(cb, pos);
+  _SliderOverlayState createState() =>
+      _SliderOverlayState(cb, pos, contextSize);
 }
 
 class _SliderOverlayState extends State<SliderOverlay> {
-  _SliderOverlayState(this.cb, this.pos);
+  _SliderOverlayState(this.cb, this.pos, this.contextSize);
   final Function cb;
   final List pos;
-  double ml = 1000;
+  final Size contextSize;
+  double ml = 400;
   double btnPos = 0;
   double textPos = 0;
-  double dragPoint = 0;
   double pointPos = 0;
+  double dragPoint;
+  initState() {
+    double centerOfBar = (contextSize.height / 2) / 2;
+    double every100px = ((contextSize.height / 2) / 1000) * 100;
+    print(every100px);
+    dragPoint = centerOfBar + every100px;
+    // print(user['quota']);
+    super.initState();
+    // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +272,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
           } else {
             //  dragPoint =  ((((dragPoint/10).floor())*10)).toDouble();
           }
-          // print(dragPoint);
+          print(dragPoint);
           // print(ml);
         });
 

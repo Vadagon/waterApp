@@ -25,7 +25,6 @@ class HomeState extends State<HomeRoute> {
   GlobalKey _key4 = GlobalKey();
 
   HomeState(this.user, this.cb);
-  // GlobalKey _key1 = GlobalKey();
 
   double btnHeight = 46;
   var todayDrunked = 0;
@@ -33,8 +32,8 @@ class HomeState extends State<HomeRoute> {
   double avatarBarHeight;
   Map<String, dynamic> drinkHistory = {};
   var persentPointOnBar;
-
   Map data;
+
   @override
   initState() {
     print(user);
