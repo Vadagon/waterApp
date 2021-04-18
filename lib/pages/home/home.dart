@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
@@ -38,9 +40,12 @@ class HomeState extends State<HomeRoute> {
   initState() {
     print(user);
     data = jsonDecode(jsonEncode(user));
+    print(data);
     todayDrunked = data['stats']['drunk'];
     drinkHistory = data['stats']['today'];
     // num dailyQuota = waterCalculator(user);
+    // todayDrunked = 0;
+    // drinkHistory = {};
     // print(user['quota']);
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
@@ -56,6 +61,9 @@ class HomeState extends State<HomeRoute> {
     double heightWithoutBody =
         (contextSize.height - padding.bottom - padding.top - avatarBarHeight) /
             2;
+    if (persentFillBar > avatarBarHeight) {
+      persentFillBar = avatarBarHeight;
+    }
     // 250, 560, 700 в масиві це хвилини а 200, 300, 100 це мілілітри
     // DONE: display drinkHistory in the Right Side Bar
 
@@ -166,7 +174,9 @@ class HomeState extends State<HomeRoute> {
                       ),
                     ),
                     // WATERBAR
-                    Container(
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 1000),
+                      curve: Curves.bounceOut,
                       width: 50,
                       height: avatarBarHeight,
                       // color: Colors.red,
@@ -175,9 +185,13 @@ class HomeState extends State<HomeRoute> {
                           // TEXT
                           _generateDrinks(false),
                           // BAR
-                          Positioned(
+                          AnimatedPositioned(
+                            duration: Duration(milliseconds: 1000),
+                            curve: Curves.bounceOut,
                             left: 33,
-                            child: Container(
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.bounceOut,
                               clipBehavior: Clip.antiAlias,
                               width: 17,
                               height: avatarBarHeight,
@@ -194,7 +208,9 @@ class HomeState extends State<HomeRoute> {
                               ),
                               child: Stack(
                                 children: [
-                                  Positioned(
+                                  AnimatedPositioned(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.bounceOut,
                                     bottom: 0,
                                     height: persentFillBar,
                                     width: 17,
@@ -229,10 +245,9 @@ class HomeState extends State<HomeRoute> {
                       key: _key,
                       child: btnAddWater(
                         context,
-                        'assets/img/drop.svg',
                         _getPositions,
                         _key,
-                        'Water',
+                        'water',
                       ),
                     ),
                     Container(
@@ -241,10 +256,9 @@ class HomeState extends State<HomeRoute> {
                       key: _key1,
                       child: btnAddWater(
                         context,
-                        'assets/img/milk.svg',
                         _getPositions,
                         _key1,
-                        'Milk',
+                        'milk',
                       ),
                     ),
                     Container(
@@ -253,10 +267,9 @@ class HomeState extends State<HomeRoute> {
                       key: _key2,
                       child: btnAddWater(
                         context,
-                        'assets/img/tea.svg',
                         _getPositions,
                         _key2,
-                        'Tea',
+                        'tea',
                       ),
                     ),
                     Container(
@@ -265,10 +278,9 @@ class HomeState extends State<HomeRoute> {
                       key: _key3,
                       child: btnAddWater(
                         context,
-                        'assets/img/coffee.svg',
                         _getPositions,
                         _key3,
-                        'Coffee',
+                        'coffee',
                       ),
                     ),
                     Container(
@@ -277,10 +289,9 @@ class HomeState extends State<HomeRoute> {
                       key: _key4,
                       child: btnAddWater(
                         context,
-                        'assets/img/juice.svg',
                         _getPositions,
                         _key4,
-                        'Juice',
+                        'juice',
                       ),
                     ),
                   ],
@@ -308,6 +319,9 @@ class HomeState extends State<HomeRoute> {
       cb(data);
       // ADD TIME AND ML TO HISTORI
     });
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {});
+    });
   }
 
   String _printDuration(
@@ -331,19 +345,39 @@ class HomeState extends State<HomeRoute> {
     });
     // GENERATE LIST OF WIDGETS
     List<Widget> list = [];
+    List<String> listV = [];
+    int index = 0;
+    int indexWhenBarFilled;
     persentPointOnBarArray.forEach((k, v) {
       var posPoint = (avatarBarHeight * (k) / 100);
+      index++;
+      listV.add(v);
+
+      if (avatarBarHeight < posPoint) {
+        posPoint = avatarBarHeight;
+        indexWhenBarFilled = index;
+        index--;
+      }
+
+      print(indexWhenBarFilled);
       list.add(
-        Positioned(
-          bottom: posPoint,
+        AnimatedPositioned(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.ease,
+          bottom: avatarBarHeight == posPoint ? avatarBarHeight - 10 : posPoint,
           child: type
-              ? Container(
+              ? AnimatedContainer(
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.bounceOut,
                   width: 17,
-                  height: 2,
+                  height: avatarBarHeight == posPoint ? 10 : 2,
                   color: Colors.white,
                 )
               : Text(
-                  v,
+                  // TODO: Vlad do update last time when bar overflowed
+                  avatarBarHeight == posPoint
+                      ? listV[indexWhenBarFilled - 1]
+                      : v,
                   style: Theme.of(context).textTheme.bodyText2.copyWith(
                       color: Colors.white,
                       fontSize: 11,
@@ -368,7 +402,6 @@ class HomeState extends State<HomeRoute> {
 
   RawMaterialButton btnAddWater(
     BuildContext context,
-    String img,
     dynamic _getPositions,
     Key keyS,
     String drinkName,
@@ -376,12 +409,13 @@ class HomeState extends State<HomeRoute> {
     return RawMaterialButton(
       constraints: BoxConstraints.tightFor(width: 50, height: 50),
       onPressed: () {
+        print(drinkName);
         showOvarlay(context, _getPositions(keyS), _getBarData, drinkName);
       },
       elevation: 2.0,
       fillColor: Colors.white,
       child: SvgPicture.asset(
-        img,
+        'assets/img/$drinkName.svg',
       ),
       padding: EdgeInsets.all(5.0),
       shape: CircleBorder(),
