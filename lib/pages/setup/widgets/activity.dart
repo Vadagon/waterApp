@@ -57,7 +57,7 @@ class _ActivitySelectState extends State<ActivitySelect> {
                         height: 50,
                       ),
                       Container(
-                        width: 250,
+                        width: 200,
                         height: 50,
                         padding: EdgeInsets.all(12),
                         margin:
@@ -119,7 +119,7 @@ class _ActivitySelectState extends State<ActivitySelect> {
                       height: 50,
                     ),
                     Container(
-                      width: 250,
+                      width: 200,
                       height: 50,
                       padding: EdgeInsets.all(15),
                       margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
@@ -179,7 +179,7 @@ class _ActivitySelectState extends State<ActivitySelect> {
                       height: 50,
                     ),
                     Container(
-                      width: 250,
+                      width: 200,
                       height: 50,
                       padding: EdgeInsets.all(12),
                       margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),
@@ -240,7 +240,7 @@ class _ActivitySelectState extends State<ActivitySelect> {
                       height: 50,
                     ),
                     Container(
-                      width: 250,
+                      width: 200,
                       height: 50,
                       padding: EdgeInsets.all(12),
                       margin: EdgeInsets.symmetric(vertical: 7, horizontal: 30),

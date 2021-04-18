@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
 // ignore: unused_import
 import 'package:intl/intl.dart';
+import 'hints.dart';
 import 'overlaySlider.dart';
 
 class HomeRoute extends StatefulWidget {
@@ -50,7 +51,7 @@ class HomeState extends State<HomeRoute> {
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
     EdgeInsets padding = MediaQuery.of(context).padding;
-    avatarBarHeight = contextSize.height / 1.8 - padding.bottom - padding.top;
+    avatarBarHeight = contextSize.height / 1.5 - padding.bottom - padding.top;
     double filledStatusBar = (todayDrunked / user['quota']) * 100;
     persentFillBar = (avatarBarHeight * filledStatusBar) / 100;
     double heightWithoutBody =
@@ -83,6 +84,9 @@ class HomeState extends State<HomeRoute> {
             children: [
               // HINT
               Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 15,
+                ),
                 height: heightWithoutBody,
                 // color:Colors.red,
                 child: Column(
@@ -90,18 +94,18 @@ class HomeState extends State<HomeRoute> {
                     Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: SvgPicture.asset(
+                          IconButton(
+                            icon: SvgPicture.asset(
                               'assets/img/bulb.svg',
                             ),
+                            tooltip: 'hint',
                           ),
+                          Hint(),
                           IconButton(
-                            icon: const Icon(
-                              Icons.settings,
-                              color: Colors.white,
-                              size: 28,
+                            icon: SvgPicture.asset(
+                              'assets/img/settings.svg',
                             ),
                             tooltip: 'Settings',
                             onPressed: () {
@@ -112,29 +116,6 @@ class HomeState extends State<HomeRoute> {
                       ),
                     ),
                     // APP BAR ICONS
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 45),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                              color: const Color(0x40000000),
-                              offset: Offset(4, 4),
-                              blurRadius: 4,
-                              spreadRadius: 0)
-                        ],
-                        color: Color(0xA668C4FB),
-                      ),
-                      width: double.infinity,
-                      child: Text(
-                        'Коли організм зневоднений, обмін речовин сповільнюється. Порушення метаболізму може привести до набору ваги.',
-                        style: Theme.of(context).textTheme.bodyText2,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -171,7 +152,9 @@ class HomeState extends State<HomeRoute> {
                               tileMode: TileMode.clamp,
                             ).createShader(bounds),
                             child: SvgPicture.asset(
-                              'assets/img/avatar.svg',
+                              user['gender'] == 'male'
+                                  ? 'assets/img/avatar2.svg'
+                                  : 'assets/img/avatar.svg',
                               height: avatarBarHeight - 30,
                             ),
                           ),
@@ -237,12 +220,13 @@ class HomeState extends State<HomeRoute> {
                 height: heightWithoutBody,
                 // color:Colors.red,
 
-                padding:
-                    EdgeInsets.only(top: 45, bottom: 45, left: 45, right: 45),
+                padding: EdgeInsets.only(left: 45, right: 45),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
+                      width: contextSize.width / 8,
+                      height: contextSize.width / 8,
                       key: _key,
                       child: btnAddWater(
                         context,
@@ -253,6 +237,8 @@ class HomeState extends State<HomeRoute> {
                       ),
                     ),
                     Container(
+                      width: contextSize.width / 8,
+                      height: contextSize.width / 8,
                       key: _key1,
                       child: btnAddWater(
                         context,
@@ -263,6 +249,8 @@ class HomeState extends State<HomeRoute> {
                       ),
                     ),
                     Container(
+                      width: contextSize.width / 8,
+                      height: contextSize.width / 8,
                       key: _key2,
                       child: btnAddWater(
                         context,
@@ -273,6 +261,8 @@ class HomeState extends State<HomeRoute> {
                       ),
                     ),
                     Container(
+                      width: contextSize.width / 8,
+                      height: contextSize.width / 8,
                       key: _key3,
                       child: btnAddWater(
                         context,
@@ -283,6 +273,8 @@ class HomeState extends State<HomeRoute> {
                       ),
                     ),
                     Container(
+                      width: contextSize.width / 8,
+                      height: contextSize.width / 8,
                       key: _key4,
                       child: btnAddWater(
                         context,
@@ -354,7 +346,9 @@ class HomeState extends State<HomeRoute> {
               : Text(
                   v,
                   style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold),
                 ),
         ),
       );
@@ -390,7 +384,7 @@ class HomeState extends State<HomeRoute> {
       child: SvgPicture.asset(
         img,
       ),
-      padding: EdgeInsets.all(15.0),
+      padding: EdgeInsets.all(5.0),
       shape: CircleBorder(),
     );
   }

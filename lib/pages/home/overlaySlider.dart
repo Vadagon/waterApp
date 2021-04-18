@@ -13,7 +13,7 @@ showOvarlay(
       top: 0,
       left: 0,
       child: Container(
-        clipBehavior:  Clip.none,
+        clipBehavior: Clip.none,
 
         width: contextSize.width,
         // color: Colors.green,
@@ -100,7 +100,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
       child: Container(
         width: 206,
         // color: Colors.red,
-        height: widget.contextSize.height / 2  ,
+        height: widget.contextSize.height / 2,
         child: Stack(
           children: [
             Positioned(
@@ -111,12 +111,12 @@ class _SliderOverlayState extends State<SliderOverlay> {
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   boxShadow: [
-                        BoxShadow(
-                            color: const Color(0x40000000),
-                            offset: Offset(2, 2),
-                            blurRadius: 2,
-                            spreadRadius: 0)
-                      ],
+                    BoxShadow(
+                        color: const Color(0x40000000),
+                        offset: Offset(2, 2),
+                        blurRadius: 2,
+                        spreadRadius: 0)
+                  ],
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   color: Color(0xFF9DEDFF),
                 ),
