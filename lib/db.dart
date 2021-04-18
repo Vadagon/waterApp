@@ -7,9 +7,7 @@ import 'package:sembast/sembast.dart';
 
 class DB {
   Map user = {
-    'stats': {
-      'today': {250: 200, 560: 300, 700: 100}
-    },
+    'stats': {'today': {}, 'drunk': 0, 'lastDay': 0},
     'quota': 1700,
     'wakeTime': ['8:00', '23: 00'],
     'bodyShape': 'regular',

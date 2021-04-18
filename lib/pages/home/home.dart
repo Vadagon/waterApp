@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:convert';
 // ignore: unused_import
 import 'package:intl/intl.dart';
 import 'overlaySlider.dart';
@@ -25,22 +26,26 @@ class HomeState extends State<HomeRoute> {
   HomeState(this.user, this.cb);
   // GlobalKey _key1 = GlobalKey();
 
+  double btnHeight = 46;
+  var todayDrunked = 0;
+  double persentFillBar;
+  double avatarBarHeight;
+  Map<String, dynamic> drinkHistory = {};
+  var persentPointOnBar;
+
+  Map data;
   @override
   initState() {
     print(user);
-
+    data = jsonDecode(jsonEncode(user));
+    todayDrunked = data['stats']['drunk'];
+    drinkHistory = data['stats']['today'];
     // num dailyQuota = waterCalculator(user);
     // print(user['quota']);
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   }
 
-  double btnHeight = 46;
-  var todayDrunked = 0;
-  double persentFillBar;
-  double avatarBarHeight;
-  var drinkHistory = {};
-  var persentPointOnBar;
   @override
   Widget build(BuildContext context) {
     Size contextSize = MediaQuery.of(context).size;
@@ -152,8 +157,12 @@ class HomeState extends State<HomeRoute> {
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
                               stops: [
-                                persentPointOnBar!=null?persentPointOnBar/100:0,
-                                persentPointOnBar!=null?persentPointOnBar/100:0,
+                                persentPointOnBar != null
+                                    ? persentPointOnBar / 100
+                                    : 0,
+                                persentPointOnBar != null
+                                    ? persentPointOnBar / 100
+                                    : 0,
                               ],
                               colors: [
                                 Color(0xffffffff),
@@ -163,7 +172,7 @@ class HomeState extends State<HomeRoute> {
                             ).createShader(bounds),
                             child: SvgPicture.asset(
                               'assets/img/avatar.svg',
-                              height: avatarBarHeight-25,
+                              height: avatarBarHeight - 30,
                             ),
                           ),
                           Text(
@@ -299,7 +308,13 @@ class HomeState extends State<HomeRoute> {
         ((((now.hour * 60) + (now.minute)) * 60) + now.second).round();
     setState(() {
       todayDrunked += ml;
-      drinkHistory.addAll({dayStartTime: ml});
+      print('dayStartTime');
+      print(dayStartTime);
+      drinkHistory.addAll({dayStartTime.toString(): ml});
+
+      data['stats']['drunk'] = todayDrunked;
+      data['stats']['today'] = drinkHistory;
+      cb(data);
       // ADD TIME AND ML TO HISTORI
     });
   }
@@ -317,10 +332,10 @@ class HomeState extends State<HomeRoute> {
     dynamic persentPointOnBarArray = {};
     var a = 0;
     drinkHistory.forEach((k, v) {
-      String timeBarText = (_printDuration(Duration(seconds: k)));
+      String timeBarText = (_printDuration(Duration(seconds: int.parse(k))));
 
       a += v;
-       persentPointOnBar = (a / user['quota']) * 100;
+      persentPointOnBar = (a / user['quota']) * 100;
       persentPointOnBarArray.addAll({persentPointOnBar: timeBarText});
     });
     // GENERATE LIST OF WIDGETS
