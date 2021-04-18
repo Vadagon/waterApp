@@ -7,13 +7,15 @@ class Hint extends StatefulWidget {
 }
 
 class _HintState extends State<Hint> {
-  // TODO: PUT HERE ENG HINTS VLAD
   var list = [
-    'Коли організм зневоднений, обмін речовин сповільнюєт3ься. Порушення метаболізму може привести до набору ваги.',
-    'Коли організм зневоднений, обмін речовин сповільнюєт5ься. Порушення метаболізму може привести до набору ваги.',
-    'Коли організм зневоднений, обмін речовин сповільнюєт2ься. Порушення метаболізму може привести до набору ваги.',
-    'Коли організм зневоднений, обмін речовин сповільнюєть4ся. Порушення метаболізму може привести до набору ваги.',
-    'Коли організм зневоднений, обмін речовин сповільнюєт1ься. Порушення метаболізму може привести до набору ваги.',
+    'Thousands have lived without love, not one without water.',
+    'Water is life’s matter and matrix, mother and medium. There is no life without water.',
+    'When the well’s dry, we know the worth of water.',
+    'If there is magic on this planet, it is contained in water.',
+    'Water is the driving force of all nature.',
+    'Nothing is softer or more flexible than water, yet nothing can resist it.',
+    'We forget that the water cycle and the life cycle are one.',
+    'In one drop of water are found all the secrets of all the oceans.',
   ];
   final _random = new Random();
   @override

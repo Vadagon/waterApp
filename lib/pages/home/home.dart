@@ -97,11 +97,11 @@ class HomeState extends State<HomeRoute> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           IconButton(
-                            icon: SvgPicture.asset(
-                              'assets/img/bulb.svg',
-                            ),
-                            tooltip: 'hint',
-                          ),
+                              icon: SvgPicture.asset(
+                                'assets/img/bulb.svg',
+                              ),
+                              tooltip: 'hint',
+                              onPressed: () {}),
                           Hint(),
                           IconButton(
                             icon: SvgPicture.asset(
