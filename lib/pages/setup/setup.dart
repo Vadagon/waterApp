@@ -14,6 +14,7 @@ import 'widgets/activity.dart';
 import 'widgets/weightSelect.dart';
 
 import '../../waterCalculator.dart';
+import '../../localNotifications.dart' as noti;
 
 class SetupRoute extends StatefulWidget {
   SetupRoute({this.user, this.cb});
@@ -45,11 +46,30 @@ class SetupState extends State<SetupRoute> {
     print(data);
   }
 
+  setBulkDailyNotifications() {
+    print('setBulkDailyNotifications');
+    var wakeTime = user['wakeTime'][0].split(":")[0];
+    wakeTime = int.parse(wakeTime);
+
+    var sleepTime = user['wakeTime'][1].split(":")[0];
+    sleepTime = int.parse(sleepTime);
+    // int.parse(user['wakeTime'][0].split(":")[0])
+    print(wakeTime);
+    print(sleepTime);
+    var repeatNumber = 0;
+    if (user['reminder'].contains('1 hour')) repeatNumber = 1;
+    if (user['reminder'].contains('2 hour')) repeatNumber = 2;
+
+    if (repeatNumber > 0)
+      for (var i = wakeTime; i <= sleepTime; i = i + repeatNumber) {
+        noti.setDailyNotifications(17, 10, id: 0);
+      }
+  }
+
   int _current = 0;
   List _slides = [1, 2, 3, 4, 5, 6, 7, 8];
 
   Widget _slideIndex(int s) {
-    print(s);
     if (s == 1) {
       return GenderSelect(processSetupData);
     }
@@ -66,6 +86,7 @@ class SetupState extends State<SetupRoute> {
       return ReminderSelect(processSetupData);
     }
     if (s == 6) {
+      noti.globalNotInit();
       return WakeUpSelect(
         cb: processSetupData,
         title: 'Wake up time',
@@ -82,9 +103,10 @@ class SetupState extends State<SetupRoute> {
       );
     }
     if (s == 8) {
+      setBulkDailyNotifications();
       return ActivitySelect(processSetupData);
     }
-    return ActivitySelect(processSetupData);
+    return GenderSelect(processSetupData);
   }
 
   @override

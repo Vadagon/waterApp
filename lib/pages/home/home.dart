@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
 // ignore: unused_import
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'hints.dart';
 import 'overlaySlider.dart';
 
@@ -374,7 +374,6 @@ class HomeState extends State<HomeRoute> {
                   color: Colors.white,
                 )
               : Text(
-                  // TODO: Vlad do update last time when bar overflowed
                   avatarBarHeight == posPoint
                       ? listV[indexWhenBarFilled - 1]
                       : v,

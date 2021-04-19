@@ -15,6 +15,7 @@ class DB {
     'age': '25',
     'gender': 'female',
     'remindFrequency': '60', // minutes
+    'setupIsFinished': false
   };
   var store = StoreRef.main();
 
