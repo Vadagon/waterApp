@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
 // ignore: unused_import
-import 'package:intl/intl.dart';
 import 'hints.dart';
 import 'overlaySlider.dart';
 
@@ -309,6 +308,7 @@ class HomeState extends State<HomeRoute> {
     var dayStartTime =
         ((((now.hour * 60) + (now.minute)) * 60) + now.second).round();
     setState(() {
+      
       todayDrunked += ml;
       print('dayStartTime');
       print(dayStartTime);
@@ -356,12 +356,15 @@ class HomeState extends State<HomeRoute> {
       if (avatarBarHeight < posPoint) {
         posPoint = avatarBarHeight;
         indexWhenBarFilled = index;
-        index--;
-      }
+        print(index);
+             list.removeAt(2); 
 
+      }
+     
       print(indexWhenBarFilled);
       list.add(
         AnimatedPositioned(
+            key: UniqueKey(),
           duration: Duration(milliseconds: 300),
           curve: Curves.ease,
           bottom: avatarBarHeight == posPoint ? avatarBarHeight - 10 : posPoint,
@@ -373,18 +376,25 @@ class HomeState extends State<HomeRoute> {
                   height: avatarBarHeight == posPoint ? 10 : 2,
                   color: Colors.white,
                 )
-              : Text(
-                  // TODO: Vlad do update last time when bar overflowed
-                  avatarBarHeight == posPoint
-                      ? listV[indexWhenBarFilled - 1]
-                      : v,
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold),
-                ),
+              : Container(
+                child: Text(
+                    // TODO: Vlad do update last time when bar overflowed
+                    avatarBarHeight == posPoint
+                        ? listV[listV.length-1]
+                        : v,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        color: Colors.white,
+                        fontSize: 11,
+                       
+                        fontWeight: FontWeight.bold),
+                  ),
+              ),
         ),
       );
+      setState(() {
+             print(list);
+              
+            });
     });
 
     return new Stack(children: list);
