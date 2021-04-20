@@ -6,6 +6,8 @@ import 'dart:convert';
 // ignore: unused_import
 import 'hints.dart';
 import 'overlaySlider.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 class HomeRoute extends StatefulWidget {
   HomeRoute({this.user, this.cb});
@@ -37,11 +39,24 @@ class HomeState extends State<HomeRoute> {
 
   @override
   initState() {
-    print(user);
     data = jsonDecode(jsonEncode(user));
     print(data);
+
+    tz.initializeTimeZones();
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    var dayOfTheMonth = now.day;
+    if (data['stats']['lastDay'] != dayOfTheMonth) {
+      data['stats'] = {
+        'today': drinkHistory,
+        'drunk': 0,
+        'lastDay': dayOfTheMonth
+      };
+      cb(data);
+    }
+
     todayDrunked = data['stats']['drunk'];
     drinkHistory = data['stats']['today'];
+
     // num dailyQuota = waterCalculator(user);
     // todayDrunked = 0;
     // drinkHistory = {};

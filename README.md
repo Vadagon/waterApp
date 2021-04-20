@@ -4,7 +4,11 @@
 flutter build appbundle
 flutter build apk
 flutter build ios
+flutter build ipa
 
+## install Pods on M1
+sudo arch -x86_64 gem install ffi
+cd ios && arch -x86_64 pod install && cd ../
 
 ## icon and splashscreen commands
 flutter pub run flutter_launcher_icons:main

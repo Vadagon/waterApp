@@ -48,21 +48,21 @@ class SetupState extends State<SetupRoute> {
 
   setBulkDailyNotifications() {
     print('setBulkDailyNotifications');
-    var wakeTime = user['wakeTime'][0].split(":")[0];
+    var wakeTime = data['wakeTime'][0].split(":")[0];
     wakeTime = int.parse(wakeTime);
 
-    var sleepTime = user['wakeTime'][1].split(":")[0];
+    var sleepTime = data['wakeTime'][1].split(":")[0];
     sleepTime = int.parse(sleepTime);
-    // int.parse(user['wakeTime'][0].split(":")[0])
+    // int.parse(data['wakeTime'][0].split(":")[0])
     print(wakeTime);
     print(sleepTime);
     var repeatNumber = 0;
-    if (user['reminder'].contains('1 hour')) repeatNumber = 1;
-    if (user['reminder'].contains('2 hour')) repeatNumber = 2;
+    if (data['reminder'].contains('1 hour')) repeatNumber = 1;
+    if (data['reminder'].contains('2 hour')) repeatNumber = 2;
 
     if (repeatNumber > 0)
       for (var i = wakeTime; i <= sleepTime; i = i + repeatNumber) {
-        noti.setDailyNotifications(17, 10, id: 0);
+        noti.setDailyNotifications(17, 10, id: i);
       }
   }
 
@@ -207,6 +207,7 @@ class SetupState extends State<SetupRoute> {
                     if (_current == 7) {
                       Navigator.pushNamed(context, '/');
                       data['quota'] = waterCalculator(data);
+                      data['setupIsFinished'] = true;
                       cb(data);
                     } else {
                       _controller.nextPage();
