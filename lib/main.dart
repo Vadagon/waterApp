@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: appTheme,
       initialRoute: user['setupIsFinished'] ? '/' : '/setup',
+        
       routes: {
         '/': (context) => HomeRoute(user: user, cb: cb),
         '/setup': (context) => SetupRoute(user: user, cb: cb),

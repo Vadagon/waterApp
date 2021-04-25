@@ -95,8 +95,8 @@ class HomeState extends State<HomeRoute> {
               0.8,
             ],
             colors: [
-              Color(0xff00D7CA),
-              Color(0xcff1B61CB),
+              Color(0xff195FC7),
+              Color(0xff195FC7),
             ],
           ),
         ),
@@ -167,8 +167,8 @@ class HomeState extends State<HomeRoute> {
                                     : 0,
                               ],
                               colors: [
-                                Color(0xffffffff),
                                 Color(0xff42D8F9),
+                                Color(0xff003E78),
                               ],
                               tileMode: TileMode.clamp,
                             ).createShader(bounds),
