@@ -58,8 +58,8 @@ class HomeState extends State<HomeRoute> {
     drinkHistory = data['stats']['today'];
 
     // num dailyQuota = waterCalculator(user);
-    todayDrunked = 0;
-    drinkHistory = {};
+    // todayDrunked = 0;
+    // drinkHistory = {};
     // print(user['quota']);
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
@@ -82,7 +82,6 @@ class HomeState extends State<HomeRoute> {
     // DONE: display drinkHistory in the Right Side Bar
 
     return Scaffold(
-     
       body: Container(
         width: contextSize.width,
         height: contextSize.height,
@@ -95,7 +94,7 @@ class HomeState extends State<HomeRoute> {
               0.8,
             ],
             colors: [
-              Color(0xff195FC7),
+              Color(0xff00D7CA),
               Color(0xff195FC7),
             ],
           ),
@@ -142,123 +141,121 @@ class HomeState extends State<HomeRoute> {
               ),
               // BODY
               Container(
-              width: contextSize.width,
-              
+                width: contextSize.width,
+
                 // color:Colors.green,
                 height: avatarBarHeight,
                 padding: EdgeInsets.symmetric(horizontal: 45),
                 child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                  
+                  mainAxisAlignment: MainAxisAlignment.center,
+
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // AVATAR
                     Expanded(
-                      child: Stack(                       
-                        children: [                       
-                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ShaderMask(
-                                    shaderCallback: (bounds) => LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      stops: [
-                                        persentPointOnBar != null
-                                            ? persentPointOnBar / 100
-                                            : 0,
-                                        persentPointOnBar != null
-                                            ? persentPointOnBar / 100
-                                            : 0,
-                                      ],
-                                      colors: [
-                                        Color(0xff42D8F9),
-                                        Color(0xff00CBF8).withOpacity(0.5),
-                                      ],
-                                      tileMode: TileMode.clamp,
-                                    ).createShader(bounds),
-                                    child: SvgPicture.asset(
-                                      user['gender'] == 'male'
-                                          ? 'assets/img/avatar2.svg'
-                                          : 'assets/img/avatar.svg',
-                                      height: avatarBarHeight - 30,
-                                    ),
+                      child: Stack(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ShaderMask(
+                                  // blendMode: BlendMode.darken,
+                                  shaderCallback: (bounds) => LinearGradient(
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                    stops: [
+                                      persentPointOnBar != null
+                                          ? persentPointOnBar / 100
+                                          : 0,
+                                      persentPointOnBar != null
+                                          ? persentPointOnBar / 100
+                                          : 0,
+                                    ],
+                                    colors: [
+                                      Colors.white,
+                                      Colors.lightBlue[500],
+                                    ],
+                                  ).createShader(bounds),
+                                  child: SvgPicture.asset(
+                                    user['gender'] == 'male'
+                                        ? 'assets/img/avatar2.svg'
+                                        : 'assets/img/avatar.svg',
+                                    height: avatarBarHeight - 30,
                                   ),
-                                  Text(
-                                    '$todayDrunked/${user['quota']}',
-                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize:18),
-                                    textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  '$todayDrunked/${user['quota']}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            AnimatedContainer(
+                              duration: Duration(milliseconds: 1000),
+                              curve: Curves.bounceOut,
+                              width: 50,
+                              height: avatarBarHeight,
+                              // color: Colors.red,
+                              child: Stack(
+                                children: [
+                                  // TEXT
+                                  _generateDrinks(false),
+                                  // BAR
+                                  AnimatedPositioned(
+                                    duration: Duration(milliseconds: 1000),
+                                    curve: Curves.bounceOut,
+                                    left: 36,
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.bounceOut,
+                                      clipBehavior: Clip.antiAlias,
+                                      width: 13,
+                                      height: avatarBarHeight,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: const Color(0x40000000),
+                                              offset: Offset(2, 2),
+                                              blurRadius: 4,
+                                              spreadRadius: 0)
+                                        ],
+                                        color: Color(0xFFFFFFFF),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          AnimatedPositioned(
+                                            duration:
+                                                Duration(milliseconds: 500),
+                                            curve: Curves.bounceOut,
+                                            bottom: 0,
+                                            height: persentFillBar,
+                                            width: 13,
+                                            left: 0,
+                                            child: Container(
+                                              color: Color(0xFF68C4FB),
+                                              child: _generateDrinks(true),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ],
-                          
+                            ),
+                          ],
                         ),
-                        
-                  
-                         
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              AnimatedContainer(
-                                duration: Duration(milliseconds: 1000),
-                                curve: Curves.bounceOut,
-                                width: 50,
-                                height: avatarBarHeight,
-                                // color: Colors.red,
-                                child: Stack(
-                                  children: [
-                                    // TEXT
-                                    _generateDrinks(false),
-                                    // BAR
-                                    AnimatedPositioned(
-                                      duration: Duration(milliseconds: 1000),
-                                      curve: Curves.bounceOut,  
-                                      left: 36  ,
-                                      child: AnimatedContainer(
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.bounceOut,
-                                        clipBehavior: Clip.antiAlias,
-                                        width: 13,
-                                        height: avatarBarHeight,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: const Color(0x40000000),
-                                                offset: Offset(2, 2),
-                                                blurRadius: 4,
-                                                spreadRadius: 0)
-                                          ],
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            AnimatedPositioned(
-                                              duration: Duration(milliseconds: 500),
-                                              curve: Curves.bounceOut,
-                                              bottom: 0,
-                                              height: persentFillBar,
-                                              width: 17,
-                                              left: 0,
-                                              child: Container(
-                                                color: Color(0xA668C4FB),
-                                                child: _generateDrinks(true),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        
                       ]),
                     ),
                     // WATERBAR
@@ -391,42 +388,41 @@ class HomeState extends State<HomeRoute> {
       if (avatarBarHeight - 16 < posPoint) {
         posPoint = avatarBarHeight;
         indexWhenBarFilled = index;
-        
       }
 
-      print('$avatarBarHeight' +  " bh");
+      print('$avatarBarHeight' + " bh");
       print(posPoint);
-      
+
       list.add(
         AnimatedPositioned(
           duration: Duration(milliseconds: 300),
           curve: Curves.ease,
-          bottom: avatarBarHeight  <= posPoint ? avatarBarHeight - 16 : posPoint,
+          bottom: avatarBarHeight <= posPoint ? avatarBarHeight - 16 : posPoint,
           child: type
               ? AnimatedContainer(
                   duration: Duration(milliseconds: 500),
                   curve: Curves.bounceOut,
                   width: 17,
                   height: avatarBarHeight == posPoint ? 14 : 2,
-                  color: avatarBarHeight == posPoint ? Color(0xFF68C4FB) : Colors.white,
+                  color: avatarBarHeight == posPoint
+                      ? Color(0xFF68C4FB)
+                      : Colors.white,
                 )
               : Container(
-                decoration: BoxDecoration(
-                // color: Colors.white,
-                  borderRadius: BorderRadius.circular(2)
-                ),
-                padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                      color: Colors.blue[500],
+                      borderRadius: BorderRadius.circular(2)),
+                  padding: EdgeInsets.all(2),
                   child: Text(
                     avatarBarHeight == posPoint ? listV[listV.length - 1] : v,
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      color: Colors.white,
+                        color: Colors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
         ),
       );
-   
     });
 
     return new Stack(children: list);
@@ -437,7 +433,7 @@ class HomeState extends State<HomeRoute> {
     final positionDrop = renderDrop.localToGlobal(Offset.zero);
     double y = positionDrop.dy;
     double x = positionDrop.dx;
-    
+
     return [x, y];
   }
 
