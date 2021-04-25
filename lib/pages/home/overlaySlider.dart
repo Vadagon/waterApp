@@ -218,6 +218,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
                       left: 10,
                       child: Container(
                         decoration: BoxDecoration(
+                          
                           boxShadow: [
                             BoxShadow(
                                 color: const Color(0x40000000),
@@ -225,7 +226,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
                                 blurRadius: 2,
                                 spreadRadius: 0)
                           ],
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Color(0xFF27C1E2),
                         ),
                         width: 80,
@@ -233,7 +234,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
                         child: Center(
                           child: TextButton(
                             child: Text('add',
-                                style: Theme.of(context).textTheme.bodyText1),
+                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize:18)),
                             onPressed: () {
                               Vibration.vibrate(duration: 10);
                               cb(((ml / 25).floor()) * 25);

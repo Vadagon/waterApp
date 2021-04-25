@@ -54,7 +54,7 @@ class _WeightSelectState extends State<WeightSelect> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'how much do you weigh?',
+          'How much do you weigh?',
           style: Theme.of(context).textTheme.headline1,
         ),
         Container(
@@ -120,7 +120,7 @@ class _WeightSelectState extends State<WeightSelect> {
 
                 itemExtent: 55.0,
                 selectedIndex: selectedIndex,
-                backgroundColor: Theme.of(context).accentColor,
+                backgroundColor:  Colors.white,
                 child: MySelectionItem(
                   isForList: false,
                   title: arr[selectedIndex],

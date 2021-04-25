@@ -50,7 +50,7 @@ class _HeightSelectState extends State<HeightSelect> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'how much do you heigh?',
+          'How much do you heigh?',
           style: Theme.of(context).textTheme.headline1,
         ),
         Container(
@@ -104,7 +104,7 @@ class _HeightSelectState extends State<HeightSelect> {
 
                 itemExtent: 55.0,
                 selectedIndex: selectedIndex,
-                backgroundColor: Theme.of(context).accentColor,
+                backgroundColor:  Colors.white,
                 child: MySelectionItem(
                   isForList: false,
                   title: arr[selectedIndex],

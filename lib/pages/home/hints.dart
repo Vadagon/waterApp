@@ -31,7 +31,7 @@ class _HintState extends State<Hint> {
         element,
         style: Theme.of(context).textTheme.bodyText2.copyWith(
               color: Colors.white,
-              fontSize: 11,
+              fontSize: 14,
             ),
         textAlign: TextAlign.center,
       ),

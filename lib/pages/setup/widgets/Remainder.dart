@@ -30,7 +30,7 @@ class _ReminderSelectState extends State<ReminderSelect> {
       children: [
         Container(
           child: Text(
-            "how often do you want to \n recive reminders?",
+            "How often do you want to \n recive reminders?",
             style: Theme.of(context).textTheme.headline1,
             textAlign: TextAlign.center,
           ),

@@ -50,7 +50,7 @@ class _YearsSelectState extends State<YearsSelect> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'how old are you?',
+          'How old are you?',
           style: Theme.of(context).textTheme.headline1,
         ),
         Container(
@@ -84,7 +84,7 @@ class _YearsSelectState extends State<YearsSelect> {
                 mode: DirectSelectMode.tap,
                 itemExtent: 45.0,
                 selectedIndex: selectedIndex,
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Colors.white,
                 child: MySelectionItem(
                   isForList: false,
                   title: arr[selectedIndex],

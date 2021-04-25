@@ -79,7 +79,7 @@ class _WakeUpSelectState extends State<WakeUpSelect> {
                 mode: DirectSelectMode.tap,
                 itemExtent: 55.0,
                 selectedIndex: selectedIndex,
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Colors.white,
                 child: MySelectionItem(
                   isForList: false,
                   title: arr[selectedIndex],

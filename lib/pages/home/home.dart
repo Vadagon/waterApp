@@ -82,7 +82,7 @@ class HomeState extends State<HomeRoute> {
     // DONE: display drinkHistory in the Right Side Bar
 
     return Scaffold(
-      backgroundColor: Color(0xFF1B61CB),
+     
       body: Container(
         width: contextSize.width,
         height: contextSize.height,
@@ -154,19 +154,13 @@ class HomeState extends State<HomeRoute> {
                   children: [
                     // AVATAR
                     Expanded(
-                    
-                     
-                      child: Stack(
-                        
-                        children: [
-                        
+                      child: Stack(                       
+                        children: [                       
                            Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
-                                
-                                
-                              
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   ShaderMask(
                                     shaderCallback: (bounds) => LinearGradient(
@@ -182,7 +176,7 @@ class HomeState extends State<HomeRoute> {
                                       ],
                                       colors: [
                                         Color(0xff42D8F9),
-                                        Color(0xff003E78),
+                                        Color(0xff00CBF8).withOpacity(0.5),
                                       ],
                                       tileMode: TileMode.clamp,
                                     ).createShader(bounds),
@@ -195,7 +189,7 @@ class HomeState extends State<HomeRoute> {
                                   ),
                                   Text(
                                     '$todayDrunked/${user['quota']}',
-                                    style: Theme.of(context).textTheme.bodyText1,
+                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize:18),
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -222,13 +216,13 @@ class HomeState extends State<HomeRoute> {
                                     // BAR
                                     AnimatedPositioned(
                                       duration: Duration(milliseconds: 1000),
-                                      curve: Curves.bounceOut,
-                                      left: 33,
+                                      curve: Curves.bounceOut,  
+                                      left: 36  ,
                                       child: AnimatedContainer(
                                         duration: Duration(milliseconds: 500),
                                         curve: Curves.bounceOut,
                                         clipBehavior: Clip.antiAlias,
-                                        width: 17,
+                                        width: 13,
                                         height: avatarBarHeight,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(5),
@@ -418,13 +412,14 @@ class HomeState extends State<HomeRoute> {
                 )
               : Container(
                 decoration: BoxDecoration(
-                color: Colors.white,
+                // color: Colors.white,
                   borderRadius: BorderRadius.circular(2)
                 ),
                 padding: EdgeInsets.all(2),
                   child: Text(
                     avatarBarHeight == posPoint ? listV[listV.length - 1] : v,
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
+                      color: Colors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.bold),
                   ),
