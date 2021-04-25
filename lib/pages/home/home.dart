@@ -58,8 +58,8 @@ class HomeState extends State<HomeRoute> {
     drinkHistory = data['stats']['today'];
 
     // num dailyQuota = waterCalculator(user);
-    // todayDrunked = 0;
-    // drinkHistory = {};
+    todayDrunked = 0;
+    drinkHistory = {};
     // print(user['quota']);
     super.initState();
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
@@ -230,7 +230,7 @@ class HomeState extends State<HomeRoute> {
                                     width: 17,
                                     left: 0,
                                     child: Container(
-                                      color: Color(0xA668C4FB),
+                                      color: Color(0xFF68C4FB),
                                       child: _generateDrinks(true),
                                     ),
                                   ),
@@ -367,42 +367,44 @@ class HomeState extends State<HomeRoute> {
       index++;
       listV.add(v);
 
-      if (avatarBarHeight < posPoint) {
+      if (avatarBarHeight - 16 < posPoint) {
         posPoint = avatarBarHeight;
         indexWhenBarFilled = index;
-        print(index);
-        list.removeAt(2);
+        
       }
 
-      print(indexWhenBarFilled);
+      print('$avatarBarHeight' +  " bh");
+      print(posPoint);
+      
       list.add(
         AnimatedPositioned(
-          key: UniqueKey(),
           duration: Duration(milliseconds: 300),
           curve: Curves.ease,
-          bottom: avatarBarHeight == posPoint ? avatarBarHeight - 10 : posPoint,
+          bottom: avatarBarHeight  <= posPoint ? avatarBarHeight - 16 : posPoint,
           child: type
               ? AnimatedContainer(
                   duration: Duration(milliseconds: 500),
                   curve: Curves.bounceOut,
                   width: 17,
-                  height: avatarBarHeight == posPoint ? 10 : 2,
-                  color: Colors.white,
+                  height: avatarBarHeight == posPoint ? 14 : 2,
+                  color: avatarBarHeight == posPoint ? Color(0xFF68C4FB) : Colors.white,
                 )
               : Container(
+                decoration: BoxDecoration(
+                color: Colors.white,
+                  borderRadius: BorderRadius.circular(2)
+                ),
+                padding: EdgeInsets.all(2),
                   child: Text(
                     avatarBarHeight == posPoint ? listV[listV.length - 1] : v,
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
-                        color: Colors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
         ),
       );
-      setState(() {
-        print(list);
-      });
+   
     });
 
     return new Stack(children: list);
@@ -413,8 +415,7 @@ class HomeState extends State<HomeRoute> {
     final positionDrop = renderDrop.localToGlobal(Offset.zero);
     double y = positionDrop.dy;
     double x = positionDrop.dx;
-    // print("POSITION of renderDrop: $y ");
-    // print("POSITION of renderDrop: $x ");
+    
     return [x, y];
   }
 
