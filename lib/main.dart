@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: appTheme,
-      initialRoute: user['setupIsFinished'] ? '/' : '/setup',
+      initialRoute: user['setupIsFinished'] ? '/setup' : '/',
         
       routes: {
         '/': (context) => HomeRoute(user: user, cb: cb),
