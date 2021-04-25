@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:direct_select/direct_select.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:vibration/vibration.dart';
 
 class WakeUpSelect extends StatefulWidget {
   final String title;
@@ -67,29 +69,35 @@ class _WakeUpSelectState extends State<WakeUpSelect> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 150,
-            child: DirectSelect(
-              itemExtent: 45.0,
-              selectedIndex: selectedIndex,
-              backgroundColor: Color(0xff1b61cb),
-              child: MySelectionItem(
-                isForList: false,
-                title: arr[selectedIndex],
+          ScaleTap(
+            onTap: () {
+              Vibration.vibrate(duration: 20);
+            },
+            child: Container(
+              width: 150,
+              child: DirectSelect(
+                mode: DirectSelectMode.tap,
+                itemExtent: 55.0,
+                selectedIndex: selectedIndex,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: MySelectionItem(
+                  isForList: false,
+                  title: arr[selectedIndex],
+                ),
+                onSelectedItemChanged: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                    finalIndex = index;
+                  });
+                },
+                items: arr
+                    .map<Widget>(
+                      (val) => MySelectionItem(
+                        title: val,
+                      ),
+                    )
+                    .toList(),
               ),
-              onSelectedItemChanged: (index) {
-                setState(() {
-                  selectedIndex = index;
-                  finalIndex = index;
-                });
-              },
-              items: arr
-                  .map<Widget>(
-                    (val) => MySelectionItem(
-                      title: val,
-                    ),
-                  )
-                  .toList(),
             ),
           ),
         ],

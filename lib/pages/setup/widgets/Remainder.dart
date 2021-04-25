@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:vibration/vibration.dart';
 
 class ReminderSelect extends StatefulWidget {
   final Function cb;
@@ -46,7 +48,19 @@ class _ReminderSelectState extends State<ReminderSelect> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              InkWell(
+              ScaleTap(
+                onTap: () {
+                  setState(() {
+                    Vibration.vibrate(duration: 10);
+                    remindTime = 'Every 1 hour';
+                  });
+                },
+                onLongPress: () {
+                  Vibration.vibrate(duration: 30);
+                  setState(() {
+                    remindTime = 'Every 1 hour';
+                  });
+                },
                 child: Container(
                   width: double.infinity,
                   height: 50,
@@ -88,13 +102,8 @@ class _ReminderSelectState extends State<ReminderSelect> {
                     ],
                   ),
                 ),
-                onTap: () {
-                  setState(() {
-                    remindTime = 'Every 1 hour';
-                  });
-                },
               ),
-              InkWell(
+              ScaleTap(
                 child: Container(
                   width: double.infinity,
                   height: 50,
@@ -138,11 +147,18 @@ class _ReminderSelectState extends State<ReminderSelect> {
                 ),
                 onTap: () {
                   setState(() {
+                    Vibration.vibrate(duration: 10);
+                    remindTime = 'Every 2 hour';
+                  });
+                },
+                onLongPress: () {
+                  Vibration.vibrate(duration: 30);
+                  setState(() {
                     remindTime = 'Every 2 hour';
                   });
                 },
               ),
-              InkWell(
+              ScaleTap(
                 child: Container(
                   width: double.infinity,
                   height: 50,
@@ -186,6 +202,13 @@ class _ReminderSelectState extends State<ReminderSelect> {
                   ),
                 ),
                 onTap: () {
+                  setState(() {
+                    Vibration.vibrate(duration: 10);
+                    remindTime = 'Do not remind';
+                  });
+                },
+                onLongPress: () {
+                  Vibration.vibrate(duration: 30);
                   setState(() {
                     remindTime = 'Do not remind';
                   });

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+ import 'package:vibration/vibration.dart';
 
 class GenderSelect extends StatefulWidget {
   GenderSelect(this.cb);
@@ -46,7 +48,16 @@ class _GenderSelectState extends State<GenderSelect> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              InkWell(
+                 
+              ScaleTap(
+                onLongPress: (){
+                     setState(() {
+                    _gender = false;
+                  });
+                 Vibration.vibrate(
+                    duration:  30,
+                  );
+                },
                 child: Container(
                   width: 150,
                   height: 150,
@@ -77,9 +88,12 @@ class _GenderSelectState extends State<GenderSelect> {
                   setState(() {
                     _gender = false;
                   });
+                   Vibration.vibrate(
+                    duration:  10,
+                  );
                 },
               ),
-              InkWell(
+              ScaleTap(
                 child: Container(
                   width: 150,
                   height: 150,
@@ -110,6 +124,17 @@ class _GenderSelectState extends State<GenderSelect> {
                   setState(() {
                     _gender = true;
                   });
+                   Vibration.vibrate(
+                    duration:  10,
+                  );
+                },
+                   onLongPress: (){
+                     setState(() {
+                    _gender = true;
+                  });
+                  Vibration.vibrate(
+                    duration:  30,
+                  );
                 },
               ),
             ],

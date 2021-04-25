@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vibration/vibration.dart';
 
 class ActivitySelect extends StatefulWidget {
   final Function cb;
@@ -47,7 +49,7 @@ class _ActivitySelectState extends State<ActivitySelect> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: InkWell(
+                child: ScaleTap(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -104,12 +106,19 @@ class _ActivitySelectState extends State<ActivitySelect> {
                   ),
                   onTap: () {
                     setState(() {
+                      Vibration.vibrate(duration: 10);
+                      remindTime = 'SEDENTARY';
+                    });
+                  },
+                  onLongPress: () {
+                    Vibration.vibrate(duration: 30);
+                    setState(() {
                       remindTime = 'SEDENTARY';
                     });
                   },
                 ),
               ),
-              InkWell(
+              ScaleTap(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -165,11 +174,18 @@ class _ActivitySelectState extends State<ActivitySelect> {
                 ),
                 onTap: () {
                   setState(() {
+                    Vibration.vibrate(duration: 10);
+                    remindTime = 'NORMAL';
+                  });
+                },
+                onLongPress: () {
+                  Vibration.vibrate(duration: 30);
+                  setState(() {
                     remindTime = 'NORMAL';
                   });
                 },
               ),
-              InkWell(
+              ScaleTap(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -226,11 +242,18 @@ class _ActivitySelectState extends State<ActivitySelect> {
                 ),
                 onTap: () {
                   setState(() {
+                    Vibration.vibrate(duration: 10);
+                    remindTime = 'ACTIVE';
+                  });
+                },
+                onLongPress: () {
+                  Vibration.vibrate(duration: 30);
+                  setState(() {
                     remindTime = 'ACTIVE';
                   });
                 },
               ),
-              InkWell(
+              ScaleTap(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -286,6 +309,13 @@ class _ActivitySelectState extends State<ActivitySelect> {
                   ],
                 ),
                 onTap: () {
+                  setState(() {
+                    Vibration.vibrate(duration: 10);
+                    remindTime = 'VERY ACTIVE';
+                  });
+                },
+                onLongPress: () {
+                  Vibration.vibrate(duration: 30);
                   setState(() {
                     remindTime = 'VERY ACTIVE';
                   });

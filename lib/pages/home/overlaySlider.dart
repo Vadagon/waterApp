@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:vibration/vibration.dart';
 
 showOvarlay(
     BuildContext context, List pos, Function cb2, String drinkName) async {
@@ -183,7 +184,6 @@ class _SliderOverlayState extends State<SliderOverlay> {
                 height: widget.contextSize.height / 2 + 20,
                 child: Stack(
                   children: [
-                    // TODO: NEED ADD ICONS FOR 100ml, 250, 500...
                     AnimatedPositioned(
                       duration: Duration(milliseconds: 100),
                       curve: Curves.ease,
@@ -235,6 +235,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
                             child: Text('add',
                                 style: Theme.of(context).textTheme.bodyText1),
                             onPressed: () {
+                              Vibration.vibrate(duration: 10);
                               cb(((ml / 25).floor()) * 25);
                             },
                           ),

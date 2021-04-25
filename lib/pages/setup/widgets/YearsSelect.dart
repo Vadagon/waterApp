@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:direct_select/direct_select.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:vibration/vibration.dart';
 
 class YearsSelect extends StatefulWidget {
   YearsSelect(this.cb);
@@ -65,37 +67,47 @@ class _YearsSelectState extends State<YearsSelect> {
   }
 
   _mainSelect(title, arr, selectedIndex) {
-    return Container(
-      margin: EdgeInsets.only(top: 50),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 150,
-            child: DirectSelect(
-              itemExtent: 45.0,
-              selectedIndex: selectedIndex,
-              backgroundColor: Color(0xff1b61cb),
-              child: MySelectionItem(
-                isForList: false,
-                title: arr[selectedIndex],
+    return ScaleTap(
+      onTap: (){
+        Vibration.vibrate(duration: 20);
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 50),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 150,
+              child: DirectSelect(
+
+                itemMagnification: 2,
+                mode: DirectSelectMode.tap,
+                itemExtent: 45.0,
+                selectedIndex: selectedIndex,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: MySelectionItem(
+                  isForList: false,
+                  title: arr[selectedIndex],
+                ),
+                onSelectedItemChanged: (index) {
+                  
+                  setState(() {
+                    selectedIndex = index;
+                    selectedIndex1 = index;
+                  });
+                
+                },
+                items: arr
+                    .map<Widget>(
+                      (val) => MySelectionItem(
+                        title: val,
+                      ),
+                    )
+                    .toList(),
               ),
-              onSelectedItemChanged: (index) {
-                setState(() {
-                  selectedIndex = index;
-                  selectedIndex1 = index;
-                });
-              },
-              items: arr
-                  .map<Widget>(
-                    (val) => MySelectionItem(
-                      title: val,
-                    ),
-                  )
-                  .toList(),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

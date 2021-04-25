@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:direct_select/direct_select.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:vibration/vibration.dart';
 
 class HeightSelect extends StatefulWidget {
   final Function cb;
@@ -48,7 +50,7 @@ class _HeightSelectState extends State<HeightSelect> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'how much do you weigh?',
+          'how much do you heigh?',
           style: Theme.of(context).textTheme.headline1,
         ),
         Container(
@@ -90,28 +92,35 @@ class _HeightSelectState extends State<HeightSelect> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.all(10.0),
-          width: 80,
-          child: DirectSelect(
-              itemExtent: 55.0,
-              selectedIndex: selectedIndex,
-              backgroundColor: Theme.of(context).accentColor,
-              child: MySelectionItem(
-                isForList: false,
-                title: arr[selectedIndex],
-              ),
-              onSelectedItemChanged: (index) {
-                setState(() {
-                  passParam(index);
-                  selectedIndex = index;
-                });
-              },
-              items: arr
-                  .map<Widget>((val) => MySelectionItem(
-                        title: val,
-                      ))
-                  .toList()),
+        ScaleTap(
+          onTap: (){
+        Vibration.vibrate(duration: 20);
+      },
+          child: Container(
+            margin: EdgeInsets.all(10.0),
+            width: 80,
+            child: DirectSelect(
+                mode: DirectSelectMode.tap,
+
+                itemExtent: 55.0,
+                selectedIndex: selectedIndex,
+                backgroundColor: Theme.of(context).accentColor,
+                child: MySelectionItem(
+                  isForList: false,
+                  title: arr[selectedIndex],
+                ),
+                onSelectedItemChanged: (index) {
+                  setState(() {
+                    passParam(index);
+                    selectedIndex = index;
+                  });
+                },
+                items: arr
+                    .map<Widget>((val) => MySelectionItem(
+                          title: val,
+                        ))
+                    .toList()),
+          ),
         ),
       ],
     );

@@ -391,7 +391,6 @@ class HomeState extends State<HomeRoute> {
                 )
               : Container(
                   child: Text(
-                    // TODO: Vlad do update last time when bar overflowed
                     avatarBarHeight == posPoint ? listV[listV.length - 1] : v,
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
                         color: Colors.white,
