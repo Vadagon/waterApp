@@ -259,6 +259,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
           ml = (litres - 1000).abs();
           if (ml > 1000) {
             ml = 1000;
+
           }
           if (ml < 200) {
             pointPos = 8;
@@ -270,6 +271,7 @@ class _SliderOverlayState extends State<SliderOverlay> {
             btnPos = 0;
           }
           if (dragPoint > maxHeight) {
+            
             ml = 0;
             dragPoint = maxHeight;
           }
