@@ -115,9 +115,12 @@ class SetupState extends State<SetupRoute> {
 
     return Scaffold(
       body: Column(
+
         children: [
+          
           Stack(
             children: [
+              
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -161,7 +164,23 @@ class SetupState extends State<SetupRoute> {
                 ),
               ),
               Positioned(
-                top: 50,
+                top: 32,
+                right: 25,
+                
+                width:30,
+                height:30,
+                child: GestureDetector(
+                    child: const Icon(
+                      Icons.cancel,
+                      color: Colors.white,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/");
+                     
+                    }),
+              ),
+              Positioned(
+                top: 70,
                 child: Container(
                   width: size.width,
                   child: Row(

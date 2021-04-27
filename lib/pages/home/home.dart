@@ -175,12 +175,12 @@ class HomeState extends State<HomeRoute> {
                                     ],
                                     colors: [
                                       Colors.white,
-                                      Colors.lightBlue[500],
+                                      Color(0xFF00CBF8),
                                     ],
                                   ).createShader(bounds),
                                   child: SvgPicture.asset(
                                     user['gender'] == 'male'
-                                        ? 'assets/img/avatar2.svg'
+                                        ? 'assets/img/v.svg'
                                         : 'assets/img/avatar.svg',
                                     height: avatarBarHeight - 30,
                                   ),
@@ -190,7 +190,7 @@ class HomeState extends State<HomeRoute> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
-                                      .copyWith(fontSize: 18),
+                                      .copyWith(fontSize: 20),
                                   textAlign: TextAlign.center,
                                 ),
                               ],
@@ -243,7 +243,7 @@ class HomeState extends State<HomeRoute> {
                                             width: 13,
                                             left: 0,
                                             child: Container(
-                                              color: Color(0xFF68C4FB),
+                                              color: Color(0xFF42D8F9),
                                               child: _generateDrinks(true),
                                             ),
                                           ),
