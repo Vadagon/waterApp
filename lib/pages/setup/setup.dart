@@ -62,7 +62,7 @@ class SetupState extends State<SetupRoute> {
 
     if (repeatNumber > 0)
       for (var i = wakeTime; i <= sleepTime; i = i + repeatNumber) {
-        noti.setDailyNotifications(17, 10, id: i);
+        noti.setDailyNotifications(i, 0, id: i);
       }
   }
 

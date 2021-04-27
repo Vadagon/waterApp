@@ -61,7 +61,7 @@ flutter_native_splash:
   image: assets/icon/splash.png
   color: "#001027"
   android_gravity: center_horizontal
-  ios_content_mode: center_horizontal
+  ios_content_mode: scaleAspectFit
 
 flutter_icons:
   android: true
