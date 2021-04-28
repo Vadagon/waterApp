@@ -38,14 +38,14 @@ showOvarlay(
         child: Stack(
           children: [
             Positioned(
-              top: 20,
-              right: 20,
+              top: 17,
+              right: 27,
               child: Container(
+                width: 20,
+                height: 20,
                 child: GestureDetector(
-                    child: const Icon(
-                      Icons.cancel,
-                      color: Colors.white,
-                    ),
+                    child: SvgPicture.asset("assets/img/cancel.svg"),   
+                    // 
                     onTap: () {
                       close();
                     }),

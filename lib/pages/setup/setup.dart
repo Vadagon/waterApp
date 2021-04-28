@@ -164,20 +164,20 @@ class SetupState extends State<SetupRoute> {
                 ),
               ),
               Positioned(
-                top: 32,
-                right: 25,
+                top: 40,
+                right: 27,
                 
-                width:30,
-                height:30,
+                width:20,
+                height:20,
                 child: GestureDetector(
-                    child: const Icon(
-                      Icons.cancel,
-                      color: Colors.white,
-                    ),
+                    child: SvgPicture.asset("assets/img/cancel.svg"),   
+                    // 
                     onTap: () {
-                      Navigator.pushNamed(context, "/");
-                     
+                     Navigator.pushNamed(context, "/");
                     }),
+                      
+                     
+                    
               ),
               Positioned(
                 top: 70,

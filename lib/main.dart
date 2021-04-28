@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: appTheme,
-      initialRoute: user['setupIsFinished'] ? '/setup' : '/',
+      initialRoute: user['setupIsFinished'] ? '/' : '/setup',
         
       routes: {
         '/': (context) => HomeRoute(user: user, cb: cb),
