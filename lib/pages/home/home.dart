@@ -174,14 +174,14 @@ class HomeState extends State<HomeRoute> {
                                           : 0,
                                     ],
                                     colors: [
-                                      Colors.white,
-                                      Color(0xFF00CBF8),
+                                      Color(0xff42D8F9),
+                                      Color(0xFF00CBF8).withOpacity(0.5),
                                     ],
                                   ).createShader(bounds),
                                   child: SvgPicture.asset(
                                     user['gender'] == 'male'
-                                        ? 'assets/img/v.svg'
-                                        : 'assets/img/avatar.svg',
+                                        ? 'assets/img/avatar.svg'
+                                        : 'assets/img/avatar2.svg',
                                     height: avatarBarHeight - 30,
                                   ),
                                 ),
@@ -379,6 +379,7 @@ class HomeState extends State<HomeRoute> {
     List<Widget> list = [];
     List<String> listV = [];
     int index = 0;
+    // ignore: unused_local_variable
     int indexWhenBarFilled;
     persentPointOnBarArray.forEach((k, v) {
       var posPoint = (avatarBarHeight * (k) / 100);
